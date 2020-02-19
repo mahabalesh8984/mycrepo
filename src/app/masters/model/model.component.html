@@ -1,0 +1,133 @@
+<div class="content-wrapper">
+    <section class="content-header">
+        
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Masters</a></li>
+            
+            <li class="active">Report Card</li>
+        </ol>
+    </section>
+    <section class="content">
+
+
+        <div class="row">
+            
+            <div class="col-md-12">
+                <mat-card class="dbox">
+                    <div class="col-sm-12"> 
+                     <form name="form" (ngSubmit)="f.form.valid && SelectReportDetails(f)" #f="ngForm" novalidate>   
+                              <div class="col-sm-2"> 
+                                    <mat-form-field class="pad-l-0 full-width">
+                                        <mat-select placeholder="Class name"  name="clid" (change)="SelectClsSubDetails(f)" 
+                                         [(ngModel)]="model.clid"  #clid="ngModel">
+                                         <mat-option *ngFor="let k of mascls" [value]="k.clid">
+                                            {{ k.clname }}
+                                         </mat-option>
+                                        </mat-select> 
+                                    </mat-form-field>
+                                </div>
+                        
+                                <div class="col-sm-2"> 
+                                    <mat-form-field class="pad-l-0 full-width">
+                                        <mat-select placeholder="Subcomb name"  name="subcbid"
+                                         [(ngModel)]="model.subcbid"  #clid="ngModel">
+                                         <mat-option *ngFor="let k of massubcomb" [value]="k.sucbid">
+                                            {{ k.sucbnm }}
+                                         </mat-option>
+                                        </mat-select> 
+                                    </mat-form-field>
+                                </div>
+
+                              <div class="col-sm-2"> 
+                                    <mat-form-field class="pad-l-0 full-width">
+                                        <mat-select placeholder="Asshead name"  name="assid"
+                                         [(ngModel)]="model.assid"  #assid="ngModel">
+                                         <mat-option *ngFor="let k of asshead" [value]="k.assid">                    
+                                            {{ k.assname }}
+                                         </mat-option>
+                                        </mat-select> 
+                                    </mat-form-field>
+                                </div>
+                                                                   
+                              <div class="col-sm-2"> 
+                                    <mat-form-field class="pad-l-0 full-width">
+                                        <mat-select placeholder="Asstype name"  name="asstypeId"
+                                         [(ngModel)]="model.asstypeId"  #asstypeId="ngModel" >
+                                         <mat-option *ngFor="let k of masasstype" [value]="k.asstypeId">
+                                            {{ k.asstypename }}
+                                         </mat-option>
+                                        </mat-select> 
+                                    </mat-form-field>
+                                </div>
+                                 
+                                <div class="col-sm-2"> 
+                                    <mat-form-field class="pad-l-0 full-width">
+                                        <mat-select placeholder="subid"  name="subid"
+                                         [(ngModel)]="model.subid"  #subid="ngModel">
+                                         <mat-option *ngFor="let k of clssub" [value]="k.subid">
+                                            {{ k.subname }}
+                                         </mat-option>
+                                        </mat-select> 
+                                    </mat-form-field>
+                                </div> 
+
+                                <!-- <div class="col-sm-2"> 
+                                    <mat-form-field class="pad-l-0 full-width">
+                                        <mat-select placeholder="subid"  name="subid"
+                                         [(ngModel)]="model.subid"  #subid="ngModel">
+                                         <mat-option *ngFor="let k of subject" [value]="k.subid">
+                                            {{ k.subname }}
+                                         </mat-option>
+                                        </mat-select> 
+                                    </mat-form-field>
+                                </div>  -->
+                        
+                             
+                        <button class="btn btn-primary btn-round commandbtn " ><i class="fa fa-search" aria-hidden="true"></i> Search</button>   
+                    </form>
+                    </div>   
+              
+                    <mat-card-content>
+                       
+                            <mat-table #table [dataSource]="dataSource" >
+                          
+                              <!-- Position Column -->
+                              <ng-container matColumnDef="action">
+                                  <mat-header-cell *matHeaderCellDef >  </mat-header-cell>
+                                  <mat-cell *matCellDef="let row"> 
+                                    <a> <i class="fa fa-minus-circle commandicons" style="font-weight: bold" (click)="deletefnc(row)"></i></a>
+                                
+                                      
+                                  </mat-cell>
+                              </ng-container>
+                              <ng-container matColumnDef="maxscore">
+                                <mat-header-cell *matHeaderCellDef   > Max Marks </mat-header-cell>
+                               <mat-cell *matCellDef="let element">
+                                     <input name="maxscore" [(ngModel)]="element.maxscore"  type="number"  (keyup)="checknumber1(element)"   > 
+                        
+                                 </mat-cell> 
+                              </ng-container>
+                          
+                              <!-- Name Column -->
+                              <ng-container matColumnDef="minscore">
+                                <mat-header-cell *matHeaderCellDef > Min Marks </mat-header-cell>
+                                <mat-cell *matCellDef="let element">
+                                     <input name="minscore" [(ngModel)]="element.minscore"  type="number"  (keyup)="checknumber2(element)"   > 
+                        
+                                 </mat-cell> 
+                              </ng-container>
+                               
+
+                              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                            </mat-table>
+                         
+                    </mat-card-content>
+                   <button class="btn btn-primary btn-round commandbtn" (click)="MarksDetails()" style="margin-left: 1150px;"><i class="fa fa-save" aria-hidden="true"> Save</i></button>
+           
+                </mat-card>
+            </div>
+        </div>
+        </section>
+</div>
+

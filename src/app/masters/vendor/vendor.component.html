@@ -1,0 +1,245 @@
+<div class="content-wrapper">
+    <section class="content-header">
+       
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Masters</a></li>
+            
+            <li class="active">Vendor</li>
+        </ol>
+    </section>
+    <section class="content">
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <mat-card class="dbox">
+                    <div class="dbox-header">
+                        <!-- <mat-card-title> Widgets </mat-card-title> -->
+                        <div class="row"><div class="col-md-12" > 
+                          <!-- <button mat-icon-button color="accent" style="float:right !important" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')" > <i class="material-icons">add</i>Add</button> -->
+                          <button class="btn btn-primary " style="float:right !important" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(model,'insert')"><i class="fa fa-plus" aria-hidden="true"></i> New Record</button>
+                        
+                        </div></div>
+                     
+                    </div>
+                    <mat-card-content>
+                       
+                            <mat-table #table [dataSource]="dataSource" >
+                          
+                              <!-- Position Column -->
+                              <ng-container matColumnDef="action">
+                                <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'">  </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass'"> 
+                                        <a> <i class="fa fa-edit commandicons" style="font-weight: bold" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')"  ></i></a>
+                                <!-- <button mat-icon-button color="accent" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')" > <i class="material-icons">edit</i></button>
+                                <button mat-icon-button color="accent" (click)="deletefnc(row)" > <i class="material-icons">delete</i></button> -->
+                                
+                                      
+                                  </mat-cell>
+                              </ng-container>
+                              <ng-container matColumnDef="vname">
+                                <mat-header-cell *matHeaderCellDef   > Name </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.vnname}} </mat-cell>
+                              </ng-container>
+                          
+                              <!-- Name Column -->
+                              <ng-container matColumnDef="telno">
+                                <mat-header-cell *matHeaderCellDef > Tel-No </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.telno}} </mat-cell>
+                              </ng-container>
+
+                              <ng-container matColumnDef="mobile">
+                                <mat-header-cell *matHeaderCellDef > Mobile </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.mobile}} </mat-cell>
+                              </ng-container>
+                              <ng-container matColumnDef="email">
+                                <mat-header-cell *matHeaderCellDef > Email </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+                              </ng-container>
+
+                              <ng-container matColumnDef="website">
+                                <mat-header-cell *matHeaderCellDef > Website </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.website}} </mat-cell>
+                              </ng-container>
+
+                              <ng-container matColumnDef="status">
+                                <mat-header-cell *matHeaderCellDef > Status </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+                              </ng-container>
+                              <ng-container matColumnDef="act2">
+                                <mat-header-cell *matHeaderCellDef [ngClass]="'commandright'">  </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [ngClass]="'commandright'"> 
+                                        <a> <i class="fa fa-minus-circle commandicons" style="font-weight: bold" (click)="deletefnc(row)"></i></a>
+                                    <!-- <button mat-icon-button color="accent" data-toggle="modal" > <i class="material-icons">edit</i></button>
+                                    <button mat-icon-button color="accent" (click)="deletefnc(row)"> <i class="material-icons">delete</i></button> -->
+                                </mat-cell>
+                            </ng-container> 
+                          
+                              <!-- Weight Column -->
+                              <!-- <ng-container matColumnDef="clcode">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Weight </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.clcode}} </mat-cell>
+                              </ng-container> -->
+                            
+                               <!-- <ng-container matColumnDef="action">
+                  
+                
+                  <mat-cell *matCellDef="let row"> <button md-raised-button data-toggle="modal" data-dismiss="modal" data-target="#myModal" >Edit</button> </mat-cell>
+                </ng-container> -->
+                          
+                              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                            </mat-table>
+                         
+                    </mat-card-content>
+                </mat-card>
+            </div>
+
+        </div>
+
+
+        <div id="myModal" class="modal fade"  modal="delbcat" data-backdrop="false" role="dialog">
+            <form name="f" (ngSubmit)="f.form.valid && SaveclassDetails(f)" #f="ngForm" novalidate>
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">{{title}}</h4>
+                  <button type="button" class="close" data-dismiss="modal" #closeAddExpenseModal ng-click="dclb()">&times;</button>
+                </div>
+                <div class="modal-body"> 
+
+                    <div class="row">
+                            <div class="col-md-12">
+                        <div class="col-md-5">
+                           <mat-form-field class="full-width pad-r-0">
+                            <input matInput name="vnname" [(ngModel)]="model.vnname" #vnname="ngModel" placeholder="Name" maxlength="50" required>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-4 col-md-offset-1">
+                                <mat-form-field >
+                                 <input matInput name="address" [(ngModel)]="model.address" #address="ngModel" placeholder="Address" maxlength="200" >
+                               </mat-form-field>
+                             </div>
+                    </div>
+                        </div>
+
+
+                        <div class="row">
+                                <div class="col-md-12">
+
+                                        <div class="col-md-5 ">
+                                                <mat-form-field class="full-width pad-r-0">
+                                                 <input matInput  name="telno"  [(ngModel)]="model.telno" #telno="ngModel" placeholder="Tel-no" maxlength="15" >
+                                               </mat-form-field>
+                                             </div>
+
+                                             <div class="col-md-4 col-md-offset-1">
+                                                    <mat-form-field class="full-width pad-r-0">
+                                                     <input matInput name="city"  [(ngModel)]="model.city" #city="ngModel" placeholder="city" maxlength="20" >
+                                                   </mat-form-field>
+                                                 </div>
+                            
+                        </div>
+                            </div>
+
+                            <div class="row">
+                                    <div class="col-md-12">
+                                            <div class="col-md-5">
+                                                    <mat-form-field class="full-width pad-r-0">
+                                                     <input matInput  name="mobile"  [(ngModel)]="model.mobile" #mobile="ngModel" placeholder="Mobile" maxlength="15" >
+                                                   </mat-form-field>
+                                                 </div>
+                                                 <div class="col-md-4 col-md-offset-1">
+                                                        <mat-form-field class="full-width pad-r-0">
+                                                         <input matInput  name="state" [(ngModel)]="model.state" #state="ngModel" placeholder="State" maxlength="20" >
+                                                       </mat-form-field>
+                                                     </div>
+                                
+                            </div>
+                                </div>
+
+                                <div class="row">
+                                        <div class="col-md-12">
+
+
+                                                <div class="col-md-5">
+                                                        <mat-form-field class="full-width pad-r-0">
+                                                         <input matInput  name="email" type="email" [(ngModel)]="model.email" #email="ngModel" placeholder="Email" maxlength="30" >
+                                                       </mat-form-field>
+                                                     </div>
+
+                                                     <div class="col-md-4 col-md-offset-1">
+                                                            <mat-form-field class="full-width pad-r-0">
+                                                             <input matInput  name="country" [(ngModel)]="model.country" #country="ngModel" placeholder="Country" maxlength="25" >
+                                                           </mat-form-field>
+                                                         </div>
+                                    
+                                </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+
+                                                <div class="col-md-5">
+                                                        <mat-form-field class="full-width pad-r-0">
+                                                         <input matInput  name="website"  [(ngModel)]="model.website" #website="ngModel" placeholder="Website" maxlength="50" >
+                                                       </mat-form-field>
+                                                     </div>
+
+                                                     <div class="col-md-4 col-md-offset-1">
+                                                            <mat-form-field class="full-width pad-r-0">
+                                                             <input matInput  name="pincode"  [(ngModel)]="model.pincode" #pincode="ngModel" placeholder="Pincode" maxlength="6" >
+                                                           </mat-form-field>
+                                                         </div>
+                                   
+                                </div>
+                                    </div>
+
+                            
+
+                                   
+
+                                 
+
+                                    
+
+                                   
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                    <div class="col-md-5">
+                                       <mat-form-field class="full-width pad-r-0">
+                                        <input matInput  name="remarks"  [(ngModel)]="model.remarks" #remarks="ngModel" placeholder="Remarks" maxlength="50" >
+                                      </mat-form-field>
+                                    </div>
+
+                                    <div class="col-md-4 col-md-offset-1">
+                                            <mat-form-field class="pad-l-0 full-width">
+                                                    <mat-select placeholder="status" name="stat" [(ngModel)]="model.status" #stat="ngModel" required>
+                                                        <mat-option *ngFor="let acyr of status" [value]="acyr.value">
+                                                            {{ acyr.viewValue }}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>    
+                                    </div>
+                                </div>
+                                    </div>
+
+                                    
+
+                          <input type="hidden" name="dbnm" [(ngModel)]="tempdbnm" #dbnm="ngModel" >
+                          <input type="hidden" name="vnid" [(ngModel)]="model.vnid" #vnid="ngModel" >
+                          <input type="hidden" name="oprtag" [(ngModel)]="oprtype" #oprtag="ngModel" >
+                    <div class="modal-footer">
+                        <button class="btn btn-primary btn-round commandbtn " [disabled]="!f.form.valid"><i class="fa fa-check" aria-hidden="true" ></i>Save</button>
+                        <button type="button" class="btn btn-secondary btn-round commandbtn" data-dismiss="modal" ng-click="dclb()" (click)="c('Close click')">Close</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </form>
+          </div>
+        </section>
+</div>

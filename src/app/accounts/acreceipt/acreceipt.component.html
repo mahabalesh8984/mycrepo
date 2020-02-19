@@ -1,0 +1,415 @@
+
+<div class="content-wrapper">
+    <section class="content-header">
+        
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Fee Counter</a></li>
+            
+            <li class="active">Academic Fees</li>
+        </ol>
+    </section>
+    <section class="content">
+
+
+        <div class="row">
+           
+                <div class="col-md-12">
+                <mat-card class="dbox">
+                    <div class="dbox-header">
+                            <div class="row">
+                        
+                       
+                          <div class="col-sm-12"> 
+                            <form name="form" >
+                                    <div class="col-md-3" >
+                                            <select2 [data]="exampleData"  [width]="300"   [cssImport]=true (valueChanged)="changed($event)"></select2>
+    
+                                    </div>
+    
+                                    <div class="col-sm-2"> 
+                                        <mat-form-field class="pad-l-0 full-width">
+                                            <mat-select placeholder="Student Name"  name="stuid"
+                                             [(ngModel)]="model.stuid"  #stuid="ngModel" (change)="stuchanged()">
+                                             <mat-option *ngFor="let k of masclass" [value]="k.stuid">
+                                                {{ k.name }}
+                                             </mat-option>
+                                            </mat-select> 
+                                        </mat-form-field>
+                                    </div>
+    
+                                    <div class="col-md-5">
+    
+                                        <!-- <mat-form-field>
+                                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Serch by Name,RollNo">
+                                          </mat-form-field> -->
+                                    </div>
+                                    <div class="col-md-2" >   
+                                <button class="btn btn-primary " style="float:right !important" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(model,'insert')"><i class="fa fa-plus" aria-hidden="true"></i>Add</button>
+                                </div>
+                            </form>
+                            </div> 
+                        
+                        </div>
+                     
+                    </div>
+                    
+                    <mat-card-content>
+                            <mat-table #table [dataSource]="dataSource">
+                                    
+                                        <!--- Note that these columns can be defined in any order.
+                                              The actual rendered columns are set as a property on the row definition" -->
+                                    
+                                        <!-- Position Column -->
+                                        <!-- <ng-container matColumnDef="action">
+                                          <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+                                          
+                                          <mat-cell *matCellDef="let row"> 
+                                                
+                                                 <button mat-icon-button color="accent" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')" > <i class="material-icons">edit</i></button>
+                                                 <button mat-icon-button color="accent" (click)="deletefnc(row)" > <i class="material-icons">delete</i></button>
+                                                
+                                                       
+                                                   </mat-cell>
+                                        </ng-container> -->
+                                    
+                                        <!-- Name Column -->
+                                        <ng-container matColumnDef="depnm">
+                                            <mat-header-cell *matHeaderCellDef> Department </mat-header-cell>
+                                            <mat-cell *matCellDef="let element"> {{element.DeptNm}} </mat-cell>
+                                          </ng-container>
+                                        <ng-container matColumnDef="insnm">
+                                          <mat-header-cell *matHeaderCellDef> Installment </mat-header-cell>
+                                          <mat-cell *matCellDef="let element"> {{element.InsName}} </mat-cell>
+                                        </ng-container>
+                                    
+                                        <!-- Weight Column -->
+                                        <ng-container matColumnDef="amount">
+                                          <mat-header-cell *matHeaderCellDef> Receipt Amount </mat-header-cell>
+                                          <mat-cell *matCellDef="let element"> {{element.RecTotalAmt}} </mat-cell>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="paid">
+                                                <mat-header-cell *matHeaderCellDef> Paid </mat-header-cell>
+                                                <mat-cell *matCellDef="let element"> {{element.PaidAmt}} </mat-cell>
+                                     </ng-container>
+
+                                              <ng-container matColumnDef="balance">
+                                                    <mat-header-cell *matHeaderCellDef> Balance </mat-header-cell>
+                                                    <mat-cell *matCellDef="let element"> {{element.BalAmt}} </mat-cell>
+                                                  </ng-container>
+
+                                                  <!-- <ng-container matColumnDef="action">
+                                                    <mat-header-cell *matHeaderCellDef > # </mat-header-cell>
+                                                    <mat-cell *matCellDef="let row"> 
+                                                 
+                                                  <button mat-icon-button color="accent" data-toggle="modal" data-dismiss="modal" data-target="#colModal" (click)="opencoldialog(row)" > <i class="material-icons">edit</i></button>
+                                                  <button mat-icon-button color="accent" (click)="deletefnc(row)" > <i class="material-icons">delete</i></button>
+                                                  
+                                                        
+                                                    </mat-cell>
+                                                </ng-container> -->
+
+                                                <ng-container matColumnDef="action">
+                                                    <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'">  </mat-header-cell>
+                                                    <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass'"> 
+                                                            <a> <i class="fa fa-edit commandicons" style="font-weight: bold" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opencoldialog(row)"  ></i></a>
+                                                        <!-- <button mat-icon-button color="accent" data-toggle="modal" > <i class="material-icons">edit</i></button>
+                                                        <button mat-icon-button color="accent" (click)="deletefnc(row)"> <i class="material-icons">delete</i></button> -->
+                                                    </mat-cell>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="act2">
+                                                    <mat-header-cell *matHeaderCellDef [ngClass]="'commandright'">  </mat-header-cell>
+                                                    <mat-cell *matCellDef="let row" [ngClass]="'commandright'"> 
+                                                            <a> <i class="fa fa-minus-circle commandicons" style="font-weight: bold" (click)="deletefnc(row)"></i></a>
+                                                        <!-- <button mat-icon-button color="accent" data-toggle="modal" > <i class="material-icons">edit</i></button>
+                                                        <button mat-icon-button color="accent" (click)="deletefnc(row)"> <i class="material-icons">delete</i></button> -->
+                                                    </mat-cell>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="act3">
+                                                    <mat-header-cell *matHeaderCellDef [ngClass]="'commandright'">  </mat-header-cell>
+                                                    <mat-cell *matCellDef="let row" [ngClass]="'commandright'"> 
+                                                            <a> <i class="fa fa-check-circle commandicons" style="font-weight: bold" data-toggle="modal" data-dismiss="modal" data-target="#colModal" (click)="opencoldialog(row)"></i></a>
+                                                        <!-- <button mat-icon-button color="accent" data-toggle="modal" > <i class="material-icons">edit</i></button>
+                                                        <button mat-icon-button color="accent" (click)="deletefnc(row)"> <i class="material-icons">delete</i></button> -->
+                                                    </mat-cell>
+                                                </ng-container>
+                                    
+                                        <!-- Expanded Content Column - The detail row is made up of this one column -->
+                                        <ng-container matColumnDef="expandedDetail">
+                                          <mat-cell *matCellDef="let detail"> 
+                                            <table class="table table-hover table-condensed" style="width:60% !important" >
+                                                <thead  style="background-color:rgb(148, 147, 147)">
+                                                    <tr><th>#</th><th>SlNo</th><th>Particulars</th><th>Amount</th></tr>
+                                                </thead>
+                                                <tbody >
+                                                    <tr *ngFor="let cust of recdetails">
+
+                                                        <td><i class="fa fa-pencil-square-o" data-toggle="modal" data-dismiss="modal" data-target="#myModal" aria-hidden="true" (click)="Detailsedit(cust)"></i></td>
+                                                        <td>{{cust.slno}}</td>
+                                                        <td>{{cust.AccName}}</td>
+                                                        <td>{{cust.RecAmt}}</td>
+                                                        
+                                                    </tr>
+                                              <!-- <tr><td>{{detail.element.PaidAmt}}</td><td>{{detail.element.BalAmt}}</td><td> <i class="fa fa-plus" data-toggle="modal" data-dismiss="modal" data-target="#myModal" aria-hidden="true"></i></td></tr> -->
+                                            </tbody>
+                                              <!-- <tr></tr>
+                                              <tr></tr> -->
+                                            </table>
+                                            <!-- The symbol for {{detail.element.name}} is {{detail.element.symbol}} -->
+                                          </mat-cell>
+                                        </ng-container>
+                                    
+                                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                        <mat-row *matRowDef="let row; columns: displayedColumns;"
+                                        matRipple 
+                                                class="element-row" 
+                                                [class.expanded]="expandedElement == row"
+                                                (click)="getrecdetails(row)"></mat-row>
+                                        <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
+                                                [@detailExpand]="row.element == expandedElement ? 'expanded' : 'collapsed'"
+                                                style="overflow: hidden"> 
+                                        </mat-row>
+                                      </mat-table>
+                       
+                            <!-- <mat-table #table [dataSource]="dataSource" >
+                          
+
+                              <ng-container matColumnDef="action">
+                                  <mat-header-cell *matHeaderCellDef > Actions </mat-header-cell>
+                                  <mat-cell *matCellDef="let row"> 
+                               
+                                <button mat-icon-button color="accent" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')" > <i class="material-icons">edit</i></button>
+                                <button mat-icon-button color="accent" (click)="deletefnc(row)" > <i class="material-icons">delete</i></button>
+                                <a> <i class="fa fa-pencil" data-toggle="modal" data-dismiss="modal" data-target="#docmodal" (click)="docdialog(row.stuId)" ></i></a>
+                                      
+                                  </mat-cell>
+                              </ng-container>
+                              <ng-container matColumnDef="rollno">
+                                    <mat-header-cell *matHeaderCellDef > Rollno </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.rollno}} </mat-cell>
+                                  </ng-container>
+                              <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef   > Name </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                              </ng-container>
+                          
+                             
+                              <ng-container matColumnDef="fatname">
+                                <mat-header-cell *matHeaderCellDef > Fathername </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.fatname}} </mat-cell>
+                              </ng-container>
+                          
+                            
+                              <ng-container matColumnDef="fatmobile">
+                                    <mat-header-cell *matHeaderCellDef > Contactno </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.fatmobile}} </mat-cell>
+                                  </ng-container>
+                                  <ng-container matColumnDef="stuid">
+                                        <mat-header-cell *matHeaderCellDef > stuid </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.fatmobile}} </mat-cell>
+                                      </ng-container>
+                          
+                              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                            </mat-table> 
+                          -->
+                    </mat-card-content>
+                </mat-card>
+            </div>
+
+        </div>
+        <div id="myModal" class="modal fade"  modal="delbcat" data-backdrop="false" role="dialog" >
+                <form name="Addform" (ngSubmit)="Addform.form.valid && SaveDetails(Addform)" #Addform="ngForm" novalidate>
+            <div class="modal-dialog" >
+                <div class="modal-content" style="height:225px !important">
+                    <div class="modal-header">
+                        <!-- <h4 class="modal-title">{{title}}</h4> -->
+                        <button type="button" class="close" data-dismiss="modal" #closeAddExpenseModal ng-click="dclb()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                                <div class="col-sm-12">
+                            <div class="col-md-8 full-width pad-r-0">
+                                   
+                                            <label>{{recdetail.AccName}}</label>
+                           
+                            </div>  
+                        </div>
+                        </div>
+
+
+                        <div class="row">
+                                <div class="col-sm-12">
+                                        
+                                        <div class="col-md-8">
+                                                <mat-form-field class="full-width pad-r-0">
+                                                        <input matInput name="RecAmt" type="number" [(ngModel)]="recdetail.RecAmt" #RecAmt="ngModel" placeholder="Fees Amount"  required>
+                                                      </mat-form-field>
+                                            </div>
+                                  
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="modal-footer">
+                            <button class="btn btn-primary btn-round commandbtn " [disabled]="!Addform.form.valid" ><i class="fa fa-check" aria-hidden="true" ></i>Save</button>
+                            <button type="button" class="btn btn-secondary btn-round commandbtn" data-dismiss="modal" ng-click="dclb()" (click)="c('Close click')">Close</button>
+                        </div>
+
+
+                        <input type="hidden" name="dbnm" [(ngModel)]="tempdbnm" #dbnm="ngModel" >
+                        <input type="hidden" name="RecNo" [(ngModel)]="recdetail.RecNo" #RecNo="ngModel" >
+                        <input type="hidden" name="AccId" [(ngModel)]="recdetail.accid" #AccId="ngModel" >
+                        
+                </div>
+            </div>
+              </form>
+                </div>
+
+               
+
+                <div id="colModal" class="modal fade"  modal="delbcat" data-backdrop="false" role="dialog" >
+                    <form name="colform" (ngSubmit)="colform.form.valid && Savepartrec(colform)" #colform="ngForm" novalidate>
+                <div class="modal-dialog" >
+                    <div class="modal-content" >
+                        <div class="modal-header">
+                            <!-- <h4 class="modal-title">{{title}}</h4> -->
+                            <button type="button" class="close" data-dismiss="modal" #colformModal >&times;</button>
+                        </div>
+                        <div class="modal-body">
+                         
+    
+    
+                            <!-- <div class="row">
+                                    <div class="col-sm-12">
+                                            
+                                            <div class="col-md-8">
+                                                    <mat-form-field class="full-width pad-r-0">
+                                                            <input matInput name="recno" type="number" [(ngModel)]="coldetails.recno" #RecNo="ngModel" placeholder="Rec No"  required>
+                                                          </mat-form-field>
+                                                </div>
+                                      
+                                    </div>
+                                </div> -->
+
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                            
+                                            <div class="col-md-8">
+                                                    <mat-form-field >
+                                                            <input matInput name="RecAmt" type="number" [(ngModel)]="coldetails.RecAmt" #RecAmt="ngModel" placeholder="Amount"  required>
+                                                          </mat-form-field>
+                                                </div>
+                                      
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                            
+                                            <div class="col-md-8">
+                                                <mat-form-field>
+                                                    <input matInput [matDatepicker]="picker" placeholder="Receipt Date" name="recdt" [(ngModel)]="coldetails.recdt" #recdt="ngModel" required>
+                                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker></mat-datepicker>
+                                                  </mat-form-field>
+                                                </div>
+                                      
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                            
+                                            <div class="col-md-8">
+                                                <mat-form-field >
+                                                    <mat-select placeholder="Mode of Receipt" name="mor" [(ngModel)]="coldetails.mor" #mor="ngModel">
+                                                        <mat-option *ngFor="let acyr of mordet" [value]="acyr.viewValue">
+                                                            {{ acyr.viewValue }}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                                </div>
+                                      
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                            
+                                            <div class="col-md-8">
+                                                    <mat-form-field >
+                                                            <input matInput name="cqno"  [(ngModel)]="coldetails.cqno" #cqno="ngModel" placeholder="Cheque/DD No"  >
+                                                          </mat-form-field>
+                                                </div>
+                                      
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                            
+                                            <div class="col-md-8">
+                                                <mat-form-field>
+                                                    <input matInput [matDatepicker]="picker1" placeholder="Cheque Date" name="cqdt" [(ngModel)]="coldetails.cqdt" #cqdt="ngModel" >
+                                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker1></mat-datepicker>
+                                                  </mat-form-field>
+                                                </div>
+                                      
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                            
+                                            <div class="col-md-8">
+                                                    <mat-form-field >
+                                                            <input matInput name="bknm"  [(ngModel)]="coldetails.bknm" #bknm="ngModel" placeholder="Bank Name"  >
+                                                          </mat-form-field>
+                                                </div>
+                                      
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                            
+                                            <div class="col-md-8">
+                                                    <mat-form-field >
+                                                            <input matInput name="ifsc"  [(ngModel)]="coldetails.ifsc" #ifsc="ngModel" placeholder="Branch/IFSC"  >
+                                                          </mat-form-field>
+                                                </div>
+                                      
+                                    </div>
+                                </div>
+                        </div>
+    
+                        <div class="modal-footer">
+                                <button class="btn btn-primary btn-round commandbtn " [disabled]="!colform.form.valid" ><i class="fa fa-check" aria-hidden="true" ></i>Save</button>
+                                <button type="button" class="btn btn-secondary btn-round commandbtn" data-dismiss="modal" >Close</button>
+                            </div>
+    
+    
+                            <input type="hidden" name="dbnm" [(ngModel)]="tempdbnm" #dbnm="ngModel" >
+                            <input type="hidden" name="recno" [(ngModel)]="coldetails.recno" #recno="ngModel" >
+                            <input type="hidden" name="deptid" [(ngModel)]="coldetails.deptid" #deptid="ngModel" >
+                            <input type="hidden" name="insid" [(ngModel)]="coldetails.insid" #insid="ngModel" >
+                            <input type="hidden" name="stuid" [(ngModel)]="coldetails.stuid" #stuid="ngModel" >
+                            
+                    </div>
+                </div>
+                  </form>
+                    </div>
+    
+               
+</section>
+</div>
+ 

@@ -1,0 +1,131 @@
+<div class="content-wrapper">
+        <section class="content-header">
+           
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Schedules</a></li>
+    
+                <li class="active">Assessments</li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <mat-card class="dbox">
+                            <div class="dbox-header">
+                       
+                            <div class="row">
+                                
+                                
+    <div class="col-sm-12">   <button class="btn btn-primary " style="float:right !important" data-toggle="modal" data-dismiss="modal" data-target="#myModal"
+        (click)="opendialog(model,'insert')"><i class="fa fa-plus" aria-hidden="true"> New Record</i></button></div>
+                        </div>
+                    </div>
+                        <mat-card-content>
+                            <mat-table #table [dataSource]="dataSource">
+                                <!-- Position Column -->
+                                <!-- Position Column -->
+                    
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="actedit" >
+                                    <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'">  </mat-header-cell>
+                                    <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass'" > 
+                                        <a> <i class="fa fa-edit commandicons" style="font-weight: bold" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')"  ></i></a>
+                                        <!-- <button mat-icon-button color="accent" data-toggle="modal" > <i class="material-icons">edit</i></button>
+                                        <button mat-icon-button color="accent" (click)="deletefnc(row)"> <i class="material-icons">delete</i></button> -->
+                                    </mat-cell>
+                                </ng-container>  
+                                <ng-container matColumnDef="occnm">
+                                    <mat-header-cell *matHeaderCellDef> Occation </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.occname}} </mat-cell>
+                                </ng-container>
+    
+                                <ng-container matColumnDef="date">
+                                    <mat-header-cell *matHeaderCellDef> From </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.ycdtfrom}} </mat-cell>
+                                </ng-container>
+    
+                                <ng-container matColumnDef="date1">
+                                        <mat-header-cell *matHeaderCellDef> To </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.ycdtto}} </mat-cell>
+                                    </ng-container>
+                                <ng-container matColumnDef="action">
+                                    <mat-header-cell *matHeaderCellDef [ngClass]="'commandright'">  </mat-header-cell>
+                                    <mat-cell *matCellDef="let row" [ngClass]="'commandright'"> 
+                                            <a> <i class="fa fa-minus-circle commandicons" style="font-weight: bold" (click)="deletefnc(row)"></i></a>
+                                        <!-- <button mat-icon-button color="accent" data-toggle="modal" > <i class="material-icons">edit</i></button>
+                                        <button mat-icon-button color="accent" (click)="deletefnc(row)"> <i class="material-icons">delete</i></button> -->
+                                    </mat-cell>
+                                </ng-container>     
+                             
+    
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                            </mat-table>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+    
+            <div id="myModal" class="modal fade" modal="delbcat" data-backdrop="false" role="dialog">
+                <form name="form" (ngSubmit)="f.form.valid && SaveDetails()" #f="ngForm" novalidate>
+                    <div class="modal-dialog ">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">{{title}}</h4>
+                                <button type="button" class="close" data-dismiss="modal" #closeAddExpenseModal ng-click="dclb()">&times;</button>
+                            </div>
+                            <div class="modal-body"><div class="row">
+                            
+                                <div class="col-sm-6">
+                                    <mat-form-field class="pad-l-0 full-width">
+                                        <mat-select placeholder="Occation" name="occid" [(ngModel)]="model.occid" [disabled]="diseditcontl" #occid="ngModel">
+                                            <mat-option *ngFor="let k of masocc" [value]="k.occid">
+                                                {{ k.occname }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                            
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                            
+                                <div class="col-sm-6">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker1" placeholder="Date From" name="ycdtfrom" [(ngModel)]="model.ycdtfrom" #ycdtfrom="ngModel"
+                                            required>
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </mat-form-field>
+                            
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                    
+                                        <div class="col-sm-6">
+                                            <mat-form-field>
+                                                <input matInput [matDatepicker]="picker2" placeholder="Date To" name="ycdtto" [(ngModel)]="model.ycdtto" #ycdtto="ngModel"
+                                                    required>
+                                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker2></mat-datepicker>
+                                            </mat-form-field>
+                                    
+                                        </div>
+                                    </div>
+                      
+    
+                                
+                                
+                                <input type="hidden" name="oprtag" [(ngModel)]="oprtype" #oprtag="ngModel">
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary btn-round commandbtn "><i class="fa fa-check" aria-hidden="true"></i>Save</button>
+                                    <button type="button" class="btn btn-secondary btn-round commandbtn" data-dismiss="modal" ng-click="dclb()" (click)="c('Close click')">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>

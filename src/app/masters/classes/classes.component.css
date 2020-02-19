@@ -1,0 +1,9 @@
+.mat-table {
+    overflow: auto;
+    max-height: 500px;
+  }
+
+
+  .mat-row {
+    min-height:30px;
+  }

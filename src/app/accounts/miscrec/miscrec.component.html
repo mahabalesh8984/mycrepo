@@ -1,0 +1,429 @@
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <!-- <h1>
+            Simple Tables
+            <small>preview of simple tables</small>
+        </h1> -->
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Fee Counter</a></li>
+            
+            <li class="active">Misc. Receipts</li>
+        </ol>
+    </section>
+    <section class="content">
+
+
+        <div class="row">
+           
+                <div class="col-md-12 ">
+                <mat-card class="dbox">
+                    <div class="dbox-header">
+                            
+                            <form name="form" >
+                                    <div class="row">
+                        
+                       
+                                            
+                                    <div class="col-sm-2"> 
+                                            <mat-form-field >
+                                                <mat-select placeholder="Company"  name="coid"
+                                                 [(ngModel)]="model.coid"  #coid="ngModel" >
+                                                 <mat-option *ngFor="let k of mascompany" [value]="k.coid">
+                                                    {{ k.conm }}
+                                                 </mat-option>
+                                                </mat-select> 
+                                            </mat-form-field>
+                                        </div>
+        
+                                        <div class="col-sm-2"> 
+                                                <mat-form-field >
+                                                    <mat-select placeholder="Department"  name="deptid"
+                                                     [(ngModel)]="model.deptid"  #deptid="ngModel" >
+                                                     <mat-option *ngFor="let k of masdept" [value]="k.deptid">
+                                                        {{ k.deptnm }}
+                                                     </mat-option>
+                                                    </mat-select> 
+                                                </mat-form-field>
+                                            </div>
+                                    <div class="col-md-2" >
+                                            <select2 [data]="exampleData"  [width]="150"   [cssImport]=true (valueChanged)="changed($event)"></select2>
+    
+                                    </div>
+    
+                                    <div class="col-sm-2"> 
+                                        <mat-form-field >
+                                            <mat-select placeholder="Student Name"  name="stuid"
+                                             [(ngModel)]="model.stuid"  #stuid="ngModel" (change)="stuchanged()">
+                                             <mat-option *ngFor="let k of masclass" [value]="k.stuid">
+                                                {{ k.name }}
+                                             </mat-option>
+                                            </mat-select> 
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-2">
+                                            <mat-form-field>
+                                                <input matInput [matDatepicker]="picker2"  placeholder="Date of Receipt" name="recdt" [(ngModel)]="model.recdt" #recdt="ngModel" required>
+                                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker2></mat-datepicker>
+                                              </mat-form-field>
+                                        </div>
+                                    
+                                    <div class="col-md-2" >   
+                                <!-- <button class="btn btn-primary " style="float:right !important" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(model,'insert')"><i class="fa fa-plus" aria-hidden="true"></i>Add</button> -->
+                                </div>
+                            </div> 
+
+                            <!-- <div class="row">
+                                    <div class="col-md-3">
+<span>Admission No:</span>
+
+                                        </div>
+                                        <div class="col-md-3">
+
+                                                <span>Fee Quota:</span>
+                                            </div>
+                                    
+                                    </div> -->
+                            </form>
+                           
+                        
+                    
+                     
+                    </div>
+                    
+                    <mat-card-content>
+                            
+                            <form class="frmcrs" name="frmcrs" #frmgcrs="ngForm" novalidate> 
+                                    <div class="row" style="height: 350px;overflow-y:auto ">  
+                                            <div class="col-md-8">                                                       
+                                         <table  class="table table-hover table-condensed" id="employee_award" style="width: 100%;">
+                                            <thead>
+                                                <tr style="background-color: lightgray;">
+                                                    <th style="padding: 10px;">Perticulars</th>
+                                                    <th style="padding: 10px;">Amount</th>
+                                                    <th style="padding: 10px;">Remarks</th>
+                                                    <th style="padding: 10px;"><button class="btn btn-default"  type="button" (click)="addCourseValue()"><i class="fa fa-plus-circle"></i></button></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>                                                          
+                                                <tr style="padding: 0px;" *ngFor="let course of courseArray; let i = index">
+                                                        
+                                                        <td style="padding: 0px;">
+                                                                <mat-form-field  style="width:250px !important">
+                                                                        <mat-select placeholder="accid" name="accid{{i}}" [(ngModel)]="course.accid" required >
+                                                                        <mat-option *ngFor="let k of masachead" [value]="k.accid">
+                                                                            {{ k.accname }}
+                                                                        </mat-option>
+                                                                        </mat-select>
+                                                                        </mat-form-field>
+                                                        </td> 
+                                                        <td style="padding: 0px;">
+                                                                <mat-form-field  style="width:100px !important">
+                                                                        <input matInput placeholder="Amount" name="amount{{i}}" [(ngModel)]="course.amount" type="number" required>
+                                                                        </mat-form-field>
+                                                        </td>
+                                                    
+                                                        <td style="padding: 0px;">
+                                                            <button style="color: #bf2222 !important;" class="btn btn-default"  type="button" (click)="deleteCourseValue(i)" (click)="deleteawards(course)"><i class="fa fa-minus-circle"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                   
+                                                </tbody>
+                                        </table></div>
+                                        <div class="col-md-4">
+                                                <mat-card class="dbox">
+                                                    <mat-card-header class="dbox-header">
+                                                        <mat-card-title>Payment</mat-card-title>
+                                
+                                                    </mat-card-header>
+                                                    <mat-card-content>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                    
+                                                                    <div class="col-md-8">
+                                                                        <mat-form-field >
+                                                                            <mat-select placeholder="Mode of Receipt" name="mor" [(ngModel)]="coldetails.mor" #mor="ngModel">
+                                                                                <mat-option *ngFor="let acyr of mordet" [value]="acyr.viewValue">
+                                                                                    {{ acyr.viewValue }}
+                                                                                </mat-option>
+                                                                            </mat-select>
+                                                                        </mat-form-field>
+                                                                        </div>
+                                                              
+                                                            </div>
+                                                        </div>
+                        
+                        
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                    
+                                                                    <div class="col-md-8">
+                                                                            <mat-form-field >
+                                                                                    <input matInput name="cqno"  [(ngModel)]="coldetails.cqno" #cqno="ngModel" placeholder="Cheque/DD No"  >
+                                                                                  </mat-form-field>
+                                                                        </div>
+                                                              
+                                                            </div>
+                                                        </div>
+                        
+                        
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                    
+                                                                    <div class="col-md-8">
+                                                                        <mat-form-field>
+                                                                            <input matInput [matDatepicker]="chqdt" placeholder="Cheque Date" name="cqdt" [(ngModel)]="coldetails.cqdt" #cqdt="ngModel" >
+                                                                            <mat-datepicker-toggle matSuffix [for]="chqdt"></mat-datepicker-toggle>
+                                                                            <mat-datepicker #chqdt></mat-datepicker>
+                                                                          </mat-form-field>
+                                                                        </div>
+                                                              
+                                                            </div>
+                                                        </div>
+                        
+                        
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                    
+                                                                    <div class="col-md-8">
+                                                                            <mat-form-field >
+                                                                                    <input matInput name="bknm"  [(ngModel)]="coldetails.bknm" #bknm="ngModel" placeholder="Bank Name"  >
+                                                                                  </mat-form-field>
+                                                                        </div>
+                                                              
+                                                            </div>
+                                                        </div>
+                        
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                    
+                                                                    <div class="col-md-8">
+                                                                            <mat-form-field >
+                                                                                    <input matInput name="ifsc"  [(ngModel)]="coldetails.ifsc" #ifsc="ngModel" placeholder="Branch/IFSC"  >
+                                                                                  </mat-form-field>
+                                                                        </div>
+                                                              
+                                                            </div>
+                                                        </div>
+                        
+                                                    </mat-card-content>
+                                                </mat-card>
+                                            </div>
+                                    </div>
+                               
+                                <div class="row"><div class="col-md-3">
+
+                                        <!-- <mat-form-field >
+                                                <mat-select placeholder="Student Name"  name="stuid"
+                                                 [(ngModel)]="model.stuid"  #stuid="ngModel" (change)="stuchanged()">
+                                                 <mat-option *ngFor="let k of masclass" [value]="k.stuid">
+                                                    {{ k.name }}
+                                                 </mat-option>
+                                                </mat-select> 
+                                            </mat-form-field> -->
+                                </div>
+                            
+                            <div class="col-md-6"><button class="btn btn-primary btn-round commandbtn " [disabled]="!frmgcrs.form.valid" (click)="insertstudentdtls()" ><i class="fa fa-check" aria-hidden="true" ></i>Save</button></div>
+                       
+                            </div>
+
+                        </form>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+
+        </div>
+        <div id="myModal" class="modal fade"  modal="delbcat" data-backdrop="false" role="dialog" >
+                <form name="Addform" (ngSubmit)="Addform.form.valid && SaveDetails(Addform)" #Addform="ngForm" novalidate>
+            <div class="modal-dialog" >
+                <div class="modal-content" style="height:225px !important">
+                    <div class="modal-header">
+                        <!-- <h4 class="modal-title">{{title}}</h4> -->
+                        <button type="button" class="close" data-dismiss="modal" #closeAddExpenseModal ng-click="dclb()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                                <div class="col-sm-12">
+                            <div class="col-md-8 full-width pad-r-0">
+                                   
+                                            <label>{{recdetail.AccName}}</label>
+                           
+                            </div>  
+                        </div>
+                        </div>
+
+
+                        <div class="row">
+                                <div class="col-sm-12">
+                                        
+                                        <div class="col-md-8">
+                                                <mat-form-field class="full-width pad-r-0">
+                                                        <input matInput name="RecAmt" type="number" [(ngModel)]="recdetail.RecAmt" #RecAmt="ngModel" placeholder="Fees Amount"  required>
+                                                      </mat-form-field>
+                                            </div>
+                                  
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="modal-footer">
+                            <button class="btn btn-primary btn-round commandbtn " [disabled]="!Addform.form.valid" ><i class="fa fa-check" aria-hidden="true" ></i>Save</button>
+                            <button type="button" class="btn btn-secondary btn-round commandbtn" data-dismiss="modal" ng-click="dclb()" (click)="c('Close click')">Close</button>
+                        </div>
+
+
+                        <input type="hidden" name="dbnm" [(ngModel)]="tempdbnm" #dbnm="ngModel" >
+                        <input type="hidden" name="RecNo" [(ngModel)]="recdetail.RecNo" #RecNo="ngModel" >
+                        <input type="hidden" name="AccId" [(ngModel)]="recdetail.accid" #AccId="ngModel" >
+                        
+                </div>
+            </div>
+              </form>
+                </div>
+
+               
+
+                <div id="colModal" class="modal fade"  modal="delbcat" data-backdrop="false" role="dialog" >
+                    <form name="colform" (ngSubmit)="colform.form.valid && Savepartrec(colform)" #colform="ngForm" novalidate>
+                <div class="modal-dialog" >
+                    <div class="modal-content" >
+                        <div class="modal-header">
+                            <!-- <h4 class="modal-title">{{title}}</h4> -->
+                            <button type="button" class="close" data-dismiss="modal" #colformModal >&times;</button>
+                        </div>
+                        <div class="modal-body">
+                         
+    
+    
+                            <!-- <div class="row">
+                                    <div class="col-sm-12">
+                                            
+                                            <div class="col-md-8">
+                                                    <mat-form-field class="full-width pad-r-0">
+                                                            <input matInput name="recno" type="number" [(ngModel)]="coldetails.recno" #RecNo="ngModel" placeholder="Rec No"  required>
+                                                          </mat-form-field>
+                                                </div>
+                                      
+                                    </div>
+                                </div> -->
+
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                            
+                                            <div class="col-md-8">
+                                                    <mat-form-field >
+                                                            <input matInput name="RecAmt" type="number" [(ngModel)]="coldetails.RecAmt" #RecAmt="ngModel" placeholder="Amount"  required>
+                                                          </mat-form-field>
+                                                </div>
+                                      
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                            
+                                            <div class="col-md-8">
+                                                <mat-form-field>
+                                                    <input matInput [matDatepicker]="picker" placeholder="Receipt Date" name="recdt" [(ngModel)]="coldetails.recdt" #recdt="ngModel" required>
+                                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker></mat-datepicker>
+                                                  </mat-form-field>
+                                                </div>
+                                      
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                            
+                                            <div class="col-md-8">
+                                                <mat-form-field >
+                                                    <mat-select placeholder="Mode of Receipt" name="mor" [(ngModel)]="coldetails.mor" #mor="ngModel">
+                                                        <mat-option *ngFor="let acyr of mordet" [value]="acyr.viewValue">
+                                                            {{ acyr.viewValue }}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                                </div>
+                                      
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                            
+                                            <div class="col-md-8">
+                                                    <mat-form-field >
+                                                            <input matInput name="cqno"  [(ngModel)]="coldetails.cqno" #cqno="ngModel" placeholder="Cheque/DD No"  >
+                                                          </mat-form-field>
+                                                </div>
+                                      
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                            
+                                            <div class="col-md-8">
+                                                <mat-form-field>
+                                                    <input matInput [matDatepicker]="picker1" placeholder="Cheque Date" name="cqdt" [(ngModel)]="coldetails.cqdt" #cqdt="ngModel" >
+                                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker1></mat-datepicker>
+                                                  </mat-form-field>
+                                                </div>
+                                      
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                            
+                                            <div class="col-md-8">
+                                                    <mat-form-field >
+                                                            <input matInput name="bknm"  [(ngModel)]="coldetails.bknm" #bknm="ngModel" placeholder="Bank Name"  >
+                                                          </mat-form-field>
+                                                </div>
+                                      
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                            
+                                            <div class="col-md-8">
+                                                    <mat-form-field >
+                                                            <input matInput name="ifsc"  [(ngModel)]="coldetails.ifsc" #ifsc="ngModel" placeholder="Branch/IFSC"  >
+                                                          </mat-form-field>
+                                                </div>
+                                      
+                                    </div>
+                                </div>
+                        </div>
+    
+                        <div class="modal-footer">
+                                <button class="btn btn-primary btn-round commandbtn " [disabled]="!colform.form.valid" ><i class="fa fa-check" aria-hidden="true" ></i>Save</button>
+                                <button type="button" class="btn btn-secondary btn-round commandbtn" data-dismiss="modal" >Close</button>
+                            </div>
+    
+    
+                            <input type="hidden" name="dbnm" [(ngModel)]="tempdbnm" #dbnm="ngModel" >
+                            <input type="hidden" name="recno" [(ngModel)]="coldetails.recno" #recno="ngModel" >
+                            <input type="hidden" name="deptid" [(ngModel)]="coldetails.deptid" #deptid="ngModel" >
+                            <input type="hidden" name="insid" [(ngModel)]="coldetails.insid" #insid="ngModel" >
+                            <input type="hidden" name="stuid" [(ngModel)]="coldetails.stuid" #stuid="ngModel" >
+                            
+                    </div>
+                </div>
+                  </form>
+                    </div>
+    
+               
+</section>
+</div>
+ 

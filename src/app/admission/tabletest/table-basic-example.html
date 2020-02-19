@@ -1,0 +1,115 @@
+
+<div class="content-wrapper">
+  <section class="content-header">
+      <h1>
+          Simple Tables
+          <small>preview of simple tables</small>
+      </h1>
+      <ol class="breadcrumb">
+          <li><a href="#"><i class="fa fa-dashboard"></i> Masters</a></li>
+          
+          <li class="active">Class</li>
+      </ol>
+  </section>
+  <section class="content">
+        <div class="row">
+          <div class="col-md-12 example-container mat-elevation-z8">
+              <mat-card class="dbox">
+                  <mat-card-content>
+  <mat-table #table [dataSource]="dataSource">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+      
+      <mat-cell *matCellDef="let element"> <i class="fa fa-plus-square"></i> {{element.position}} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="weight">
+      <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+    </ng-container>
+
+    <!-- Expanded Content Column - The detail row is made up of this one column -->
+    <ng-container matColumnDef="expandedDetail">
+      <mat-cell *matCellDef="let detail"> 
+        <table class="table table-bordered" >
+          <tr><td>{{detail.element.name}}</td><td>{{detail.element.weight}}</td><td> <button class="btn btn-primary " style="float:right !important" data-toggle="modal" data-dismiss="modal" data-target="#myModal" ><i class="fa fa-plus" aria-hidden="true"></i>Add</button></td></tr>
+          <!-- <tr></tr>
+          <tr></tr> -->
+        </table>
+        <!-- The symbol for {{detail.element.name}} is {{detail.element.symbol}} -->
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"
+    matRipple 
+            class="element-row" 
+            [class.expanded]="expandedElement == row"
+            (click)="expandedElement = row"></mat-row>
+    <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
+            [@detailExpand]="row.element == expandedElement ? 'expanded' : 'collapsed'"
+            style="overflow: hidden"> 
+    </mat-row>
+  </mat-table>
+</mat-card-content>
+</mat-card>
+</div>
+</div>
+</section>
+</div>
+
+<div id="myModal" class="modal fade"  modal="delbcat" data-backdrop="false" role="dialog">
+    <form name="form" (ngSubmit)="f.form.valid && SaveDetails(f)" #f="ngForm" novalidate>
+    <div class="modal-dialog ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">{{title}}</h4>
+          <button type="button" class="close" data-dismiss="modal" #closeAddExpenseModal ng-click="dclb()">&times;</button>
+        </div>
+        <div class="modal-body"> 
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                       <mat-form-field class="full-width pad-r-0">
+                        <input matInput name="feqtcd" [(ngModel)]="model.feqtcd" #feqtcd="ngModel" placeholder="Code" required>
+                      </mat-form-field>
+                    </div>
+                    </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                       <mat-form-field class="full-width pad-r-0">
+                        <input matInput name="feqtname" [(ngModel)]="model.feqtname" #feqtname="ngModel" placeholder="DeptName" required>
+                      </mat-form-field>
+                    </div>
+                    </div>
+               
+
+                  <input type="hidden" name="dbnm" [(ngModel)]="tempdbnm" #dbnm="ngModel" >
+                  <input type="hidden" name="feqtId" [(ngModel)]="model.feqtId" #feqtId="ngModel" >
+                  <input type="hidden" name="oprtag" [(ngModel)]="oprtype" #oprtag="ngModel" >
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-round commandbtn " ><i class="fa fa-check" aria-hidden="true"></i>Save</button>
+                <button type="button" class="btn btn-secondary btn-round commandbtn" data-dismiss="modal" ng-click="dclb()" (click)="c('Close click')">Close</button>
+            </div>
+        </div>
+    </div>
+    </div>
+    </form>
+  </div>
+<!-- Copyright 2017 Google Inc. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->

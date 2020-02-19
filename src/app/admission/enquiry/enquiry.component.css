@@ -1,0 +1,197 @@
+/* @import '../../../../../node_modules/bootstrap/dist/css/bootstrap.min.css'; */
+
+
+
+/******** form wizard **********/
+
+.tsf-nav-step {
+    position: relative;
+    float: left;
+    margin-left: 5%;
+}
+
+.gsi-step-indicator.triangle {
+    background-color: transparent;
+    padding: 0;
+}
+
+.gsi-step-indicator {
+    width: 100%;
+    background-color: #edeff0;
+    border-radius: .25em;
+}
+
+.gsi-step-indicator.triangle li {
+    position: relative;
+    padding: 0;
+    margin: 4px 4px 4px 0;
+    font-size: 12px;
+}
+
+.gsi-step-indicator li {
+    float: left;
+    display: inline-block;
+    margin: 1.2em 0;
+}
+
+.gsi-step-indicator.triangle li:first-of-type>* {
+    border-radius: .25em 0 0 .25em;
+}
+
+.gsi-step-indicator.triangle li.current>* {
+    color: #fff;
+    background-color: #3ac9d6;
+    border-color: #3ac9d6;
+}
+
+.gsi-step-indicator.triangle li>* {
+    position: relative;
+    /* padding: 16px 38px 3px 38px !important; */
+   padding: 9px 13px 4px 23px !important;
+    color: #2c3f4c;
+    background-color: #edeff0;
+    border-color: #edeff0;
+}
+
+.gsi-step-indicator li.current>* {
+    color: #96c03d;
+}
+
+.tsf-nav-step ul a {
+    text-decoration: none !important;
+}
+
+.gsi-step-indicator a {
+    text-decoration: none !important;
+}
+
+.gsi-step-indicator li>* {
+    display: flex;
+    font-size: 1.4rem;
+    color: #2c3f4c;
+}
+
+.gsi-transition li>* {
+    -webkit-transition: background-color .6s ease, border-color .6s ease;
+    -moz-transition: background-color .6s ease, border-color .6s ease;
+    -o-transition: background-color .6s ease, border-color .6s ease;
+    transition: background-color .6s ease, border-color .6s ease;
+}
+
+.gsi-step-indicator li .number {
+    font-size: 2em;
+}
+
+.gsi-transition li>* .number,
+.gsi-transition li>* .number:before {
+    -webkit-transition: background-color .6s ease, border-color .6s ease;
+    -moz-transition: background-color .6s ease, border-color .6s ease;
+    -o-transition: background-color .6s ease, border-color .6s ease;
+    transition: background-color .6s ease, border-color .6s ease;
+}
+
+.tsf-nav-step ul .desc {
+    padding-top: 0;
+}
+
+.gsi-style-2 li .desc {
+    padding-top: 0;
+}
+
+.gsi-step-indicator li .desc {
+    padding-left: 10px;
+    vertical-align: middle;
+}
+
+.gsi-step-indicator li .desc label {
+    font-size: 16px;
+}
+
+.tsf-wizard .tsf-nav-step label {
+    cursor: pointer !important;
+}
+
+.tsf-nav-step ul label {
+    margin-bottom: 0 !important;
+}
+
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.gsi-step-indicator li .desc span {
+    font-size: 14px;
+    display: block;
+}
+
+.gsi-step-indicator.triangle a:hover {
+    color: #fff;
+    background-color: #2c3f4c;
+    border-color: #2c3f4c;
+}
+
+.gsi-step-indicator a:hover {
+    color: #96c03d;
+}
+
+.gsi-step-indicator li::after {
+    display: inline-block;
+    content: '»';
+    margin: 0 1em;
+    color: #959fa5;
+}
+
+.gsi-step-indicator.triangle li::after,
+.gsi-step-indicator.triangle li>*::after {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 100%;
+    height: 0;
+    width: 0;
+    border: 17px solid transparent;
+    border-right-width: 0;
+    /* border-left-width: 21px; */
+    border-left-width: 17px;
+}
+
+.gsi-step-indicator.triangle li>*::after {
+    z-index: 2;
+    border-left-color: inherit;
+}
+
+.gsi-step-indicator.triangle li::after {
+    z-index: 1;
+    -webkit-transform: translateX(4px);
+    -moz-transform: translateX(4px);
+    -ms-transform: translateX(4px);
+    -o-transform: translateX(4px);
+    transform: translateX(4px);
+    border-left-color: #fff;
+    margin: 0;
+}
+
+
+    .modal-dialog {
+        margin-top: 60px;
+    
+        width:950px;
+    
+        height:400px;
+        z-index: unset;
+    }
+
+
+    .select2-container--default .select2-selection--single {
+        background-color: #fff;
+        border-bottom: 1px solid #aaa;
+        border-radius: 0px;
+    }
+
+    .select2-dropdown {
+        background-color: #fff;
+        border-bottom: 1px solid #aaa;
+        border-radius: 0px;}

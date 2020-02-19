@@ -1,0 +1,894 @@
+
+<div class="content-wrapper">
+    <section class="content-header" >
+      
+            
+            <ol class="breadcrumb" style="float: left !important">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Masters</a></li>
+                    
+                    <li class="active">Class</li>
+                </ol>
+           
+        
+    </section>
+    <section class="content">
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <mat-card class="dbox">
+                        <mat-card-content>
+                    <!-- <div class="dbox-header">
+                      
+                        <div class="row"><div class="col-md-6">Class</div> <div class="col-md-6" > 
+                         
+                       
+                             
+                        
+                        </div></div>
+                     
+                    </div> -->
+                    <div class="col-sm-12"> 
+                        <form name="form" >
+                                <div class="col-md-5" >
+                                        <select2 [data]="exampleData"  [width]="300"   [cssImport]=true (valueChanged)="changed($event)"></select2>
+
+                                </div>
+                                <div class="col-md-5">
+
+                                    <mat-form-field>
+                                            <mat-icon matSuffix>search</mat-icon>
+                                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Serch by Name,RollNo">
+                                      </mat-form-field>
+                                </div>
+                                <div class="col-md-2" >   
+                            <button class="btn btn-primary " style="float:right !important" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(model,'insert')"><i class="fa fa-plus" aria-hidden="true"></i> New Student</button>
+                            </div>
+                        </form>
+                        </div>
+                   
+                       
+                            <mat-table #table [dataSource]="dataSource" >
+                          
+
+                              <ng-container matColumnDef="action" >
+                                  <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'" >  </mat-header-cell>
+                                  <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass'"> 
+                                    <a> <i class="fa fa-edit commandicons" title="Edit" style="font-weight: bold" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')" ></i></a>
+                                <!-- <button mat-icon-button color="accent" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')" > <i class="material-icons">edit</i></button> -->
+                               
+                                
+                                      
+                                  </mat-cell>
+                              </ng-container>
+                              <ng-container matColumnDef="photo">
+                                    <mat-header-cell *matHeaderCellDef   >  </mat-header-cell>
+                                    <mat-cell *matCellDef="let element">  <img src="http://106.51.136.76:8081/mycampz/v3/Images/SG/photoblank.png" class="user-photo" alt="User Image"> </mat-cell>
+                                  </ng-container>
+                        
+                              <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef   > Name </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                              </ng-container>
+                          
+                              <ng-container matColumnDef="rollno" [ngClass]="'customWidthClass'">
+                                    <mat-header-cell *matHeaderCellDef >  </mat-header-cell>
+                                    <mat-cell *matCellDef="let element" item-width="20px"> <span> <i *ngIf="element.gender=='M'" class="fa fa-male" style="font-size:18px !important;color:rgb(7, 128, 3)"  ></i> <i *ngIf="element.gender=='F'" style="font-size:18px !important;color:rgb(255, 136, 0)" class="fa fa-female"  ></i></span> </mat-cell>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="dob">
+                                        <mat-header-cell *matHeaderCellDef > DOB </mat-header-cell>
+                                        <mat-cell *matCellDef="let element" item-width="20px"> {{element.dob |date: 'dd-MMM-yyyy'}}</mat-cell>
+                                      </ng-container>
+                                      <ng-container matColumnDef="admno">
+                                            <mat-header-cell *matHeaderCellDef > ADMNO </mat-header-cell>
+                                            <mat-cell *matCellDef="let element"> {{element.admno}} </mat-cell>
+                                          </ng-container>
+                              <ng-container matColumnDef="stsno">
+                                <mat-header-cell *matHeaderCellDef > STSNO </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.stsno}} </mat-cell>
+                              </ng-container>
+
+                              <ng-container matColumnDef="motname">
+                                    <mat-header-cell *matHeaderCellDef > Mother </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.motname}} </mat-cell>
+                                  </ng-container>
+                          
+                                  <ng-container matColumnDef="fatname">
+                                        <mat-header-cell *matHeaderCellDef > Father </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.fatname}} </mat-cell>
+                                      </ng-container>
+                              <ng-container matColumnDef="fatmobile">
+                                    <mat-header-cell *matHeaderCellDef > Mobile No </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"><span class="phoneno">{{element.fatmobile}}</span>  </mat-cell>
+                                  </ng-container>
+                                  <ng-container matColumnDef="fatemail">
+                                        <mat-header-cell *matHeaderCellDef > Email </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.fatemail}} </mat-cell>
+                                      </ng-container>
+
+                                      <ng-container matColumnDef="action2" [ngClass]="'commandright'">
+                                        <mat-header-cell *matHeaderCellDef [ngClass]="'commandright'" >  </mat-header-cell>
+                                        <mat-cell *matCellDef="let row" [ngClass]="'commandright'"> 
+                                          <a> <i class="fa fa-upload commandicons" data-toggle="modal" data-dismiss="modal" title="Upload Documents" data-target="#docmodal" (click)="docdialog(row.stuId)" ></i></a>
+                                         &nbsp;&nbsp;&nbsp; <a> <i class="fa fa-print commandicons" title="Pdf"  ></i></a>
+                                      <!-- <button mat-icon-button color="accent" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')" > <i class="material-icons">edit</i></button> -->
+                                     
+                                      
+                                            
+                                        </mat-cell>
+                                    </ng-container>
+                          
+                              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                            </mat-table> 
+
+
+                         
+                    </mat-card-content>
+
+                    <mat-card-content>
+                        <mat-paginator #paginator 
+                          [pageSize]="5"
+                          [pageSizeOptions]="[5, 10, 20]"
+                          (page)="onpaging($event)"
+                          (selectChange)="onpaging($event)"
+                          >
+                        </mat-paginator>
+                      </mat-card-content>
+                </mat-card>
+            </div>
+
+        </div>
+        <div id="myModal" class="modal fade"  modal="delbcat" data-backdrop="false" role="dialog" >
+
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <!-- <h4 class="modal-title">{{title}}</h4> -->
+                            <button type="button" class="close" data-dismiss="modal" #closeAddExpenseModal ng-click="dclb()">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                
+                
+                                    <!-- <section class="content"> -->
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div >
+                
+                                                    <div class="box-body">
+                                                        <div class="container-fluid" style="border: 1px solid #ccc;padding-left: 6px;">
+                                                            <div class="row">
+                                                                <div class="col-md-11 ">
+                                                                    <div class="tsf-nav-step box-title modelwz" style="margin-left:0px;">
+                
+                                                                        <ul  class="gsi-step-indicator triangle gsi-style-2 gsi-transition">
+                                                                            <li (click)="tab = 1"  [ngClass]="{current:tab==1}" data-toggle="tab">
+                                                                                <a>
+                                                                                        
+                                                                                    <span class="desc">
+                                                                                        <label>Personal Info</label>
+                                                                                    </span>
+                                                                                </a>
+                                                                            </li>
+                                                                            <li (click)="tab = 2" [ngClass]="{current:tab==2}" data-toggle="tab" >
+                                                                                <a >
+                
+                                                                                    <span class="desc">
+                                                                                        <label>Academic Info</label>
+                                                                                    </span>
+                                                                                </a>
+                                                                            </li>
+                                                                            <li (click)="tab = 3" [ngClass]="{current:tab==3}" data-toggle="tab">
+                                                                                <a>
+                
+                                                                                    <span class="desc">
+                                                                                        <label>Parents Info</label>
+                                                                                        </span>
+                                                                                </a>
+                                                                                
+                                                                            </li>
+                                                                            <li (click)="tab = 4" [ngClass]="{current:tab==4}" data-toggle="tab">
+                                                                                <a>
+                
+                                                                                    <span class="desc">
+                                                                                        <label> Address Info</label>
+                                                                                    </span>
+                                                                                </a>
+                                                                            </li>
+                                                                            <li (click)="tab = 5" [ngClass]="{current:tab==5}" data-toggle="tab">
+                                                                                <a>
+                
+                                                                                    <span class="desc">
+                                                                                        <label>Payment Info</label>
+                                                                                    </span>
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" *ngIf="tab===1">
+                                                                <div class="wave nregfrm col-md-12 form-horizontal">
+                                                                    <div class="box-body">
+                
+                                                                        <form class="frmgrar" name="frmgrar" #formDir="ngForm">
+                                                                         
+                                                                            <input type="hidden" name="dbnm" [(ngModel)]="student.dbnm" #dbnm="ngModel" >
+                                                                            <input type="hidden" name="stuid" [(ngModel)]="student.stuId" #stuid="ngModel" >
+                                                                            <input type="hidden" name="oprtag" [(ngModel)]="student.oprtag" #oprtag="ngModel" >
+                                                                          
+                                                                            <div class="row">
+                                                                                <div class="col-md-4 ">
+                                                                                    <mat-form-field class="full-width pad-r-0">
+                                                                                        <input matInput placeholder="Student Name" name="name" [(ngModel)]="student.name" #name="ngModel" required>
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                                <div class="col-md-4 col-md-offset-1">
+                                                                                    <mat-form-field>
+                                                                                        <input matInput [matDatepicker]="picker1"  placeholder="Date of birth" name="dob" [(ngModel)]="student.dob" #dob="ngModel" required>
+                                                                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                                                                        <mat-datepicker #picker1></mat-datepicker>
+                                                                                      </mat-form-field>
+                                                                                </div>
+                                                                            </div>
+                                                                            
+                                                                            <div class="row">
+                                                                                
+                                                                                    <div class="col-md-3 col-md-offset-right-6">
+                                                                                        <mat-form-field class="pad-l-0 full-width">
+                                                                                            <mat-select placeholder="Gender" name="gender" [(ngModel)]="student.gender" #gender="ngModel" required>
+                                                                                                <mat-option *ngFor="let acyr of genders" [value]="acyr.value">
+                                                                                                    {{ acyr.viewValue }}
+                                                                                                </mat-option>
+                                                                                            </mat-select>
+                                                                                        </mat-form-field>
+                                                                                    </div>
+                                                                                    <div class="col-md-3 col-md-offset-2">
+                                                                                        <mat-form-field class="pad-l-0 full-width">
+                                                                                            <mat-select placeholder="Blood Group" name="bloodgroup" [(ngModel)]="student.bloodgroup" #bloodgroup="ngModel">
+                                                                                                <mat-option *ngFor="let acyr of bgroops" [value]="acyr.viewValue">
+                                                                                                    {{ acyr.viewValue }}
+                                                                                                </mat-option>
+                                                                                            </mat-select>
+                                                                                        </mat-form-field>    
+                                                                                    </div>
+                                                                                
+                                                                                </div>
+                                                                            <!-- <div class="row">
+                                                                                <div class="col-md-6">
+                                                                                    <mat-form-field class="full-width pad-r-0">
+                                                                                        <input matInput placeholder="Middle Name" name="Middlename" [(ngModel)]="student.Middlename" #Middlename="ngModel">
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <input matInput placeholder="Addmission No" name="addmissionno" [(ngModel)]="student.addmissionno" #addmissionno="ngModel"
+                                                                                            required>
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                            </div> -->
+                                                                            
+                                                                            <!-- <div class="row">
+                                                                                <div class="col-md-5">
+                                                                                    <mat-form-field class="full-width ">
+                                                                                        <input matInput placeholder="Last Name" name="Lastname" [(ngModel)]="student.Lastname" #Lastname="ngModel">
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                                <div class="col-md-5">
+                                                                                <mat-form-field>
+                                                                                        <input matInput [matDatepicker]="picker" placeholder="Addmission date" name="doa" [(ngModel)]="student.doa" #doa="ngModel" required>
+                                                                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                                                        <mat-datepicker #picker></mat-datepicker>
+                                                                                      </mat-form-field>
+                                                                                    </div>
+                                                                            </div>
+                                                                             -->
+                                                                            <!-- <div class="row">
+
+                                                                                    <div class="col-md-6">
+                                                                                            <mat-form-field>
+                                                                                                    <input matInput [matDatepicker]="picker1" placeholder="Date of birth" name="dob" [(ngModel)]="student.dob" #dob="ngModel" required>
+                                                                                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                                                                                    <mat-datepicker #picker1></mat-datepicker>
+                                                                                                  </mat-form-field>
+                                                                                                </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <mat-form-field class="full-width ">
+                                                                                            <input matInput placeholder="Aadhar No." name="Aadharno" [(ngModel)]="student.Aadharno" #Aadharno="ngModel">
+                                                                                        </mat-form-field>
+                                                                                    </div>
+                                                                                    
+                                                                                </div> -->
+
+
+                                                                                <div class="row">
+                                                                                
+                                                                                    <div class="col-md-4">
+                                                                                        <mat-form-field class="full-width pad-r-0">
+                                                                                            <input matInput placeholder="Religion" name="religion" [(ngModel)]="student.religion" #religion="ngModel">
+                                                                                        </mat-form-field>
+                                                                                    </div>
+                                                                                    <div class="col-md-4 col-md-offset-1">
+                                                                                        <mat-form-field class="full-width pad-r-0">
+                                                                                            <input matInput placeholder="Mothertongue" name="mothertongue" [(ngModel)]="student.mothertongue" #mothertongue="ngModel">
+                                                                                        </mat-form-field>
+                                                                                    </div>
+                                                                               
+                                                                                </div>
+
+
+                                                                                    <div class="row">
+
+                                                                                        <div class="col-md-4  ">
+                                                                                            <mat-form-field class="full-width pad-r-0">
+                                                                                                <input matInput placeholder="Caste" name="caste" [(ngModel)]="student.caste" #caste="ngModel">
+                                                                                            </mat-form-field>
+                                                                                            </div>
+                                                                                            <div class="col-md-2 col-md-offset-1 ">
+                                                                                                <mat-form-field class="pad-l-0 full-width">
+                                                                                                    <mat-select placeholder="Category" name="category" [(ngModel)]="student.category" #category="ngModel" required>
+                                                                                                        <mat-option *ngFor="let acyr of castecodes" [value]="acyr.value">
+                                                                                                            {{ acyr.viewValue }}
+                                                                                                        </mat-option>
+                                                                                                    </mat-select>
+                                                                                                </mat-form-field>    
+                                                                                            </div>
+
+                                                                                            <div class="col-md-2  ">
+                                                                                                <mat-form-field class="full-width pad-r-0">
+                                                                                                    <input matInput placeholder="Nationality" name="nationality" [(ngModel)]="student.nationality" #nationality="ngModel">
+                                                                                                </mat-form-field>
+                                                                                                </div>
+                                                                                        
+                                                                                    </div>
+                                                                                 
+
+
+
+                                                                                    <div class="row">
+                                                                                
+                                                                                        <div class="col-md-4">
+                                                                                            <mat-form-field class="full-width pad-r-0">
+                                                                                                <input matInput placeholder="Subcaste" name="subcaste" [(ngModel)]="student.subcaste" #subcaste="ngModel">
+                                                                                            </mat-form-field>
+                                                                                        </div>
+                                                                                        <div class="col-md-3 col-md-offset-1">
+                                                                                            <mat-form-field class="pad-l-0 full-width">
+                                                                                                <mat-select placeholder="Status" name="stustatush" [(ngModel)]="student.stustatush" #stustatush="ngModel" required>
+                                                                                                    <mat-option *ngFor="let acyr of status" [value]="acyr.viewValue">
+                                                                                                        {{ acyr.viewValue }}
+                                                                                                    </mat-option>
+                                                                                                </mat-select>
+                                                                                            </mat-form-field>    
+                                                                                        </div>
+                                                                                    
+                                                                                    </div>
+
+                                                                                       
+                                                                                            
+                                                                        </form>
+                
+                
+                
+                                                                    </div>
+                                                                    <div class="box-footer" >
+                                                                        <button class="btn btn-info btn-sm pull-right" tabindex="6" (click)="tab=2"  [disabled]="!formDir.form.valid">
+                                                                            Next
+                                                                            <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+                                                                        </button>
+                                                                    </div>
+                
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" *ngIf="tab===2">
+                                                                <div class="wave nregfrm col-md-12 form-horizontal">
+                                                                    <div class="box-body">
+                                                                            <!-- <div class="row justify-content-center"> -->
+                                                                                <!-- <div class="col-8"> -->
+                                                                        <form  name="frmaca" #frmaca="ngForm">
+
+                                                                                <!-- <div class="row">
+                                                                                        <div class="col-md-4 col-md-offset-4">sfdfdfdfdfdf</div>
+                                                                                      </div> -->
+
+                                                                                      
+                                                                            <div class="row">
+                                                                                <div class="col-md-4 ">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <input matInput placeholder="Addmission No" name="admno" [(ngModel)]="student.admno" #admno="ngModel"
+                                                                                            required>
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                                <div class="col-md-4 col-md-offset-1">
+                                                                                    <mat-form-field class="pad-l-0 full-width" >
+                                                                                        <mat-select placeholder="Admitted Year" name="adayid" [(ngModel)]="student.adayid" #adayid="ngModel" required>
+                                                                                            <mat-option *ngFor="let acyr of acYears" [value]="acyr.value">
+                                                                                                {{ acyr.viewValue }}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                            </div>
+                                                                           
+                                                                            
+           
+                                                                            <div class="row">
+                                                                                <div class="col-md-4 ">
+                                                                                    <mat-form-field>
+                                                                                        <input matInput [matDatepicker]="picker" placeholder="Addmission date" name="doa" [(ngModel)]="student.doa" #doa="ngModel" required>
+                                                                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                                                        <mat-datepicker #picker></mat-datepicker>
+                                                                                      </mat-form-field>
+                                                                               
+                                                                                </div>
+                                                                                <div class="col-md-4 col-md-offset-1">
+                                                                                    <mat-form-field class="full-width ">
+                                                                                        <input matInput placeholder="Aadhar No." name="aadharno" maxlength="16" [(ngModel)]="student.aadharno" #aadharno="ngModel" pattern='^[0-9]*$'
+                                                                                        >
+
+                                                                                        <mat-error *ngIf=" !aadharno.valid">
+                                                                                            Please enter a valid aadhar number
+                                                                                          </mat-error>
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                            </div>
+                                                                           
+                                                                          
+                                                                            <div class="row">
+                                                                                <div class="col-md-3 col-md-offset-right-6">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <mat-select placeholder="Admitted class" name="admclid" [(ngModel)]="student.admclid" #admclid="ngModel" required>
+                                                                                            <mat-option *ngFor="let k of masclass" [value]="k.clid">
+                                                                                                {{ k.clname }}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                    </mat-form-field>
+                                                                                </div>
+
+                                                                                <div class="col-md-2 col-md-offset-2">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <mat-select placeholder="Class" name="clid" [(ngModel)]="student.clid" #clid="ngModel" required>
+                                                                                            <mat-option *ngFor="let k of masclass" [value]="k.clid">
+                                                                                                {{ k.clname }}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                    </mat-form-field>
+                                                                            </div>
+                                                                                <div class="col-md-2 ">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <mat-select placeholder="Section" name="secid" [(ngModel)]="student.secid" #secid="ngModel" required>
+                                                                                            <mat-option *ngFor="let s of massec" [value]="s.secid">
+                                                                                                {{ s.secname }}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                                
+                                                                            </div>
+                                                                                
+                                                                             
+                                                                            <div class="row">
+                                                                                <div class="col-md-4 ">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <input matInput placeholder="STS No" name="stsno" [(ngModel)]="student.stsno" #stsno="ngModel"
+                                                                                            >
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                                <div class="col-md-4 col-md-offset-1">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <input matInput placeholder="Roll No" name="rollno" [(ngModel)]="student.rollno" #rollno="ngModel" pattern='^[0-9]*$'
+                                                                                        >
+
+                                                                                        <mat-error *ngIf=" !rollno.valid">
+                                                                                            Please enter a valid roll number
+                                                                                          </mat-error>
+                                                                                            
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                            </div>
+                                                                           
+                                                                            
+                                                                            <div class="row">
+                                                                                <div class="col-md-3 col-md-offset-right-6">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <mat-select placeholder="Subject Combination" name="subcombid" [(ngModel)]="student.subcombid" #subcombid="ngModel" required>
+                                                                                            <mat-option *ngFor="let acyr of subcomb" [value]="acyr.sucbid">
+                                                                                                {{ acyr.sucbnm }}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                                <div class="col-md-3 col-md-offset-2">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <mat-select placeholder="House" name="house" [(ngModel)]="student.house" #house="ngModel">
+                                                                                            <mat-option *ngFor="let acyr of houses" [value]="acyr.viewValue">
+                                                                                                {{ acyr.viewValue }}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                            </div>
+    
+    
+    
+    
+    
+                                                                                        
+                                                                    
+                                                                        </form>
+                                                                    
+                                                                    <!-- </div>
+                                                                </div> -->
+                                                                    
+                                                                    </div>
+                                                                    <div class="box-footer" >
+                                                                        <button class="btn btn-info btn-sm pull-right" (click)="tab=3" [disabled]="!frmaca.form.valid">
+                                                                            Next
+                                                                            <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+                                                                        </button>
+                                                                
+                                                                        <button class="btn btn-default btn-sm pull-right bkrght" tabindex="11" (click)="tab=1">
+                                                                            <i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" *ngIf="tab===3">
+                                                                <div class="wave nregfrm col-md-12 form-horizontal">
+                                                                    <div class="box-body">
+                
+                                                                        <form   name="pform" #parentform="ngForm">
+                                                                            <div class="row">
+                                                                                <div class="col-md-4 ">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <input matInput placeholder="Fathername" name="fatname" [(ngModel)]="student.fatname" #fatname="ngModel"
+                                                                                            required>
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                                <div class="col-md-4 col-md-offset-1">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <input matInput placeholder="Father profession" name="fatprofession" [(ngModel)]="student.fatprofession" #fatprofession="ngModel"
+                                                                                            >
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                            </div>
+
+
+
+                                                                            <div class="row">
+                                                                                <div class="col-md-4 ">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <input matInput placeholder="Father Mobileno" name="fatmobile" [(ngModel)]="student.fatmobile" #fatmobile="ngModel" pattern="[0-9]{10}"
+                                                                                            required>
+
+                                                                                            <mat-error *ngIf=" !fatmobile.valid">
+                                                                                                Please enter a valid phonenumber
+                                                                                              </mat-error>
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                                <div class="col-md-4 col-md-offset-1">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <input matInput placeholder="Father Emailid" name="fatemail" [(ngModel)]="student.fatemail" #fatemail="ngModel" pattern= "^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
+                                                                                            >
+
+                                                                                            <mat-error *ngIf="!fatemail.valid">
+                                                                                                Please enter  valid email address
+                                                                                              </mat-error>
+                                                                                              
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                            <div class="row">
+                                                                                <div class="col-md-4 ">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <input matInput placeholder="Mothername" name="motname" [(ngModel)]="student.motname" #motname="ngModel"
+                                                                                            required>
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                                <div class="col-md-4 col-md-offset-1">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <input matInput placeholder="Mother profession" name="motprofession" [(ngModel)]="student.motprofession" #motprofession="ngModel"
+                                                                                            >
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                            
+
+                                                                            <div class="row">
+                                                                                <div class="col-md-4 ">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <input matInput placeholder="Mother Mobileno" name="motmobile1" [(ngModel)]="student.motmobile" #motmobile="ngModel" pattern="[0-9]{10}"
+                                                                                            >
+
+                                                                                            <mat-error *ngIf=" !motmobile.valid">
+                                                                                                Please enter a valid phonenumber
+                                                                                              </mat-error>
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                                <div class="col-md-4 col-md-offset-1">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <input matInput placeholder="Mother Emailid" name="motemail" [(ngModel)]="student.motemail" #mottemail="ngModel" pattern= "^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
+                                                                                        >
+
+                                                                                        <mat-error *ngIf="!mottemai.valid">
+                                                                                            Please enter  valid email address
+                                                                                          </mat-error>
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                            </div>
+                                                                           
+                                                                        </form>
+                
+                                                                    </div>
+                                                                    <div class="box-footer" style="background: #edeff0;">
+                                                                        <button class="btn btn-info btn-sm pull-right" tabindex="20" (click)="tab=4" [disabled]="!parentform.form.valid">
+                                                                            Next
+                                                                            <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+                                                                        </button>
+                                                                        <button class="btn btn-default btn-sm pull-right bkrght" (click)="tab=2">
+                                                                            <i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" *ngIf="tab===4">
+                                                                <div class="wave nregfrm col-md-12 form-horizontal">
+                                                                    <div class="box-body">
+                
+                                                                        <form class="frmgrar" name="Addform" #Addform="ngForm">
+                
+                                                                            <div class="row">
+                                                                                <div class="col-md-8 ">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <textarea matInput placeholder="Address" rows="4" name="address" [(ngModel)]="student.address" #address="ngModel" required
+                                                                                            ></textarea>
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                                
+                                                                            </div>
+
+                                                                            <div class="row">
+                                                                                <div class="col-md-3 ">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <input matInput placeholder="City" name="city" [(ngModel)]="student.city" #city="ngModel"
+                                                                                            >
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                                <div class="col-md-3 col-md-offset-2">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <input matInput placeholder="State" name="state" [(ngModel)]="student.state" #state="ngModel"
+                                                                                            >
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="row">
+                                                                                <div class="col-md-3 ">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <input matInput placeholder="Country" name="country " [(ngModel)]="student.country " #country ="ngModel"
+                                                                                            >
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                                <div class="col-md-3 col-md-offset-2">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <input matInput placeholder="Pincode" name="pincode" [(ngModel)]="student.pincode" #pincode="ngModel"   maxLength="6"  pattern='^[0-9]*$'
+                                                                                            >
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                            </div>
+                
+
+                
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="box-footer" >
+                                                                        <button class="btn btn-info btn-sm pull-right" tabindex="20" (click)="tab=5" [disabled]="!Addform.form.valid">
+                                                                            Next
+                                                                            <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+                                                                        </button>
+                                                                        <button class="btn btn-default btn-sm pull-right bkrght" (click)="tab=3">
+                                                                            <i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" *ngIf="tab===5">
+                                                                <div class="wave nregfrm col-md-12 form-horizontal">
+                                                                    <div class="box-body">
+                
+                
+                                                                        <form class="frmgrar" name="payfrm" #payfrm="ngForm">
+                                                                            <span  style="font-weight:bold">Academic</span>
+                                                                            <br>
+
+                                                                            <div class="row">
+                                                                                <div class="col-md-4 ">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <mat-select placeholder="Admission Quota" name="feqid" [(ngModel)]="student.feqid" #feqid="ngModel" required>
+                                                                                            <mat-option *ngFor="let fq of fequota" [value]="fq.feqtId">
+                                                                                                {{ fq.feqtname }}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                                <div class="col-md-4 col-md-offset-1">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <mat-select placeholder="Payment Option" name="payoptid" [(ngModel)]="student.payoptid" #payoptid="ngModel" required>
+                                                                                            <mat-option *ngFor="let pay of maspayopt" [value]="pay.payoptid">
+                                                                                                {{ pay.payoptname }}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                            </div>
+                                                                           
+                                                                            <span style="font-weight:bold">Transport</span>
+
+
+
+                                                                            <div class="row">
+                                                                                <div class="col-md-4 ">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <mat-select placeholder="Mode of Transport" name="mot" [(ngModel)]="student.mot" #mot="ngModel">
+                                                                                            <mat-option *ngFor="let acyr of motlst" [value]="acyr.viewValue">
+                                                                                                {{ acyr.viewValue }}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                                <div class="col-md-4 col-md-offset-1">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <mat-select placeholder="Payment Option" name="payopttranid" [(ngModel)]="student.payopttranid" #payopttranid="ngModel" required>
+                                                                                            <mat-option *ngFor="let pay of maspayopt" [value]="pay.payoptid">
+                                                                                                {{ pay.payoptname }}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="row">
+                                                                                <div class="col-md-4 ">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <input matInput placeholder="Route No" name="rootno" [(ngModel)]="student.rootno" #rootno="ngModel"
+                                                                                            >
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                                <div class="col-md-4 col-md-offset-1">
+                                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                                        <input matInput placeholder="Distance" name="locdist" [(ngModel)]="student.locdist" #locdist="ngModel" maxlength="3" value="0" pattern='^[0-9]*$'
+                                                                                        required >
+                                                                                    </mat-form-field>
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                        </form>
+                
+                                                                    </div>
+                                                                    <div class="box-footer" >
+                                                                        <button class="btn btn-info btn-sm pull-right" tabindex="20" (click)="insertstudentdtls(student)"  [disabled]="!student.fatname">
+                                                                            Save
+                                                                            <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+                                                                        </button>
+
+                          
+                                                                        <button class="btn btn-default btn-sm pull-right bkrght" (click)="tab=4">
+                                                                            <i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                
+                                                        </div>
+                                                    </div>
+                
+                                                   
+                
+                
+                                                </div>
+                                            </div>
+                                        </div>
+                
+                
+                
+                
+                
+                
+                
+                                    <!-- </section> -->
+                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+               
+                <div id="docmodal" class="modal"  modal="delbcat" data-backdrop="false" role="dialog" >
+                        
+                                        <div class="modal-dialog" >
+                                            <div class="modal-content" style="height:300px !important">
+                                                <div class="modal-header">
+                                                    <!-- <h4 class="modal-title">{{title}}</h4> -->
+                                                    <button type="button" class="close" data-dismiss="modal" #closeAddExpenseModal ng-click="dclb()">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+
+
+                                                            <div class="col-sm-2">
+                                                                    <mat-form-field class="pad-l-0 full-width">
+                                                                            <mat-select placeholder="Document Type" name="doctype" [(ngModel)]="doctype" #house="ngModel">
+                                                                                <mat-option *ngFor="let acyr of doctypes" [value]="acyr.viewValue">
+                                                                                    {{ acyr.viewValue }}
+                                                                                </mat-option>
+                                                                            </mat-select>
+                                                                        </mat-form-field>
+                                                            </div>
+                                                        <div class="col-sm-5">
+                                                                <label class="btn btn-primary" for="my-file-selector">
+                                                                        <input id="my-file-selector" type="file" style="display:none" 
+                                                                        onchange="$('#upload-file-info').html(this.files[0].name)" (change)="upload($event)" single>
+                                                                        Browse 
+                                                                        
+                                                                    </label>
+                                                                    <span  id="upload-file-info">No file selected.</span>
+                                        
+                                                          
+                                                        </div>
+                                                        <div class="col-sm-2">
+
+                                                                <button class="btn btn-primary " style="float:left !important"  (click)="fileupload()"><i class="fa fa-plus" aria-hidden="true"></i>Upload</button>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                            <div class="col-sm-12">
+                                                                    
+                                                                    <div class="col-md-8">
+                                                                            <mat-card class="dbox">
+                                                                                <mat-card-header class="dbox-header">
+                                                                                    <mat-card-title> Documents Uploaded </mat-card-title>
+                                                                                </mat-card-header>
+                                                                                <mat-card-content>
+                                                                                    <table class="table table-bordered">
+                                                                                        <tr *ngFor="let color of doclist">
+                                                                                            <td>
+                                                                                                <i class="fa fa-trash"></i>
+                                                                                            </td>
+                                                                                           
+                                                                                            <td>{{color.docpurpose}}</td>
+                                                                                            <!-- <td>{{color.title}}</td>
+                                                                                            <td>{{color.author}}</td> -->
+                                                                                            <td>
+                                                                                                <!-- <i class="material-icons" (click)="openDialog()">delete_forever</i> -->
+                                                                                                <i class="fa fa-download" (click)="openalert('test alert',alertcontent)"></i>
+                                                            
+                                                                                            </td>
+                                                                                            
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </mat-card-content>
+                                                                            </mat-card>
+                                                                        </div>
+                                                              
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+</section>
+</div>
+ 

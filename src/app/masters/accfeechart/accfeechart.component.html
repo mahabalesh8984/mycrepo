@@ -1,0 +1,250 @@
+<div class="content-wrapper">
+    <section class="content-header">
+        
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Classroom</a></li>
+            
+            <li class="active">Report Card</li>
+        </ol>
+    </section>
+    <section class="content">
+
+
+        <div class="row">
+            
+            <div class="col-md-12">
+                <mat-card class="dbox">
+                    <div class="col-sm-12"> 
+                    
+                              <div class="col-sm-2"> 
+                                    <mat-form-field class="pad-l-0 full-width">
+                                        <mat-select placeholder="Class name"  name="clid" (change)="SelectClsSubDetails(f)" 
+                                         [(ngModel)]="model.clid"  #clid="ngModel">
+                                         <mat-option *ngFor="let k of mascls" [value]="k.clid">
+                                            {{ k.clname }}
+                                         </mat-option>
+                                        </mat-select> 
+                                    </mat-form-field>
+                                </div>
+                        
+                                <div class="col-sm-2"> 
+                                    <mat-form-field class="pad-l-0 full-width">
+                                        <mat-select placeholder="Admission type"  name="admtypeid"
+                                         [(ngModel)]="model.admtypeid"  #admtypeid="ngModel">
+                                         <mat-option *ngFor="let k of admtype" [value]="k.value">
+                                            {{ k.viewValue }}
+                                         </mat-option>
+                                        </mat-select> 
+                                    </mat-form-field>
+                                </div>
+
+                              <div class="col-sm-2"> 
+                                    <mat-form-field class="pad-l-0 full-width">
+                                        <mat-select placeholder="Fee Quota"  name="feeqtid"
+                                         [(ngModel)]="model.feeqtid"  #feeqtid="ngModel">
+                                         <mat-option *ngFor="let k of masfeequta" [value]="k.feqtId">                    
+                                            {{ k.feqtname }}
+                                         </mat-option>
+                                        </mat-select> 
+                                    </mat-form-field>
+                                </div>
+                                                                   
+                              <div class="col-sm-2"> 
+                                    <mat-form-field class="pad-l-0 full-width">
+                                        <mat-select placeholder="Payment Option"  name="payoptid"
+                                         [(ngModel)]="model.payoptid"  #payoptid="ngModel" >
+                                         <mat-option *ngFor="let k of maspayopt" [value]="k.payoptid">
+                                            {{ k.payoptname }}
+                                         </mat-option>
+                                        </mat-select> 
+                                    </mat-form-field>
+                                </div>
+                                 
+                                <div class="col-sm-2"> 
+                                    <mat-form-field class="pad-l-0 full-width">
+                                        <mat-select placeholder="Installments"  name="insid"
+                                         [(ngModel)]="model.insid"  #insid="ngModel">
+                                         <mat-option *ngFor="let k of masins" [value]="k.insid">
+                                            {{ k.insname }}
+                                         </mat-option>
+                                        </mat-select> 
+                                    </mat-form-field>
+                                </div> 
+
+                                <!-- <div class="col-sm-2"> 
+                                    <mat-form-field class="pad-l-0 full-width">
+                                        <mat-select placeholder="subid"  name="subid"
+                                         [(ngModel)]="model.subid"  #subid="ngModel">
+                                         <mat-option *ngFor="let k of subject" [value]="k.subid">
+                                            {{ k.subname }}
+                                         </mat-option>
+                                        </mat-select> 
+                                    </mat-form-field>
+                                </div>  -->
+                        
+                             
+                        <button class="btn btn-primary btn-round commandbtn " (click)="Getperticulars()" ><i class="fa fa-search" aria-hidden="true"></i> Search</button>   
+
+                        <button class="btn btn-primary " style="float:right !important" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(feemodel,'insert')"><i class="fa fa-plus" aria-hidden="true"></i> Add</button>
+                    
+                    </div>   
+                
+                    <mat-card-content>
+
+                        <div class="row"><div class="col-md-6">
+                              
+                                                <mat-table #table [dataSource]="dataSource" >
+                                                        
+                                                            <!-- Position Column -->
+                                                            <ng-container matColumnDef="action">
+                                                                <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'">  </mat-header-cell>
+                                                                <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass'"> 
+                                                                        <a> <i class="fa fa-edit commandicons" style="font-weight: bold" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')"  ></i></a>
+                                                                <!-- <button mat-icon-button color="accent" data-toggle="modal" data-dismiss="modal" data-target="#myModal" ><i class="fa fa-plus mat-icon"></i></button> -->
+                                                                
+                                                                <!-- <button mat-icon-button color="accent" (click)="deletefnc(row)" > <i class="material-icons">delete</i></button> -->
+                                                                
+                                                                      
+                                                                  </mat-cell>
+                                                              </ng-container>
+                                                            <!-- <ng-container matColumnDef="action">
+                                                                <mat-header-cell *matHeaderCellDef >  </mat-header-cell>
+                                                                <mat-cell *matCellDef="let row">
+                                                                        <button mat-icon-button color="accent" (click)="opendialog(row,'update')" > <i class="material-icons">edit</i></button> 
+                                                          <button mat-icon-button color="accent" (click)="deletefnc(row)" > <i class="material-icons">delete</i></button>
+                                                              
+                                                                    
+                                                                </mat-cell>
+                                                            </ng-container> -->
+                                                            <ng-container matColumnDef="Particulars">
+                                                              <mat-header-cell *matHeaderCellDef   > Particulars </mat-header-cell>
+                                                             
+                                                              <mat-cell *matCellDef="let element"> {{element.accname}} </mat-cell>
+                                                      
+                                                              
+                                                            </ng-container>
+                                                        
+                                                            <!-- Name Column -->
+                                                            <ng-container matColumnDef="Company">
+                                                              <mat-header-cell *matHeaderCellDef > Company </mat-header-cell>
+                                                             
+                                                                  <mat-cell *matCellDef="let element"> {{element.conm}} </mat-cell>
+                                                      
+                                                              
+                                                            </ng-container>
+                                                             
+                                                            <ng-container matColumnDef="Fees">
+                                                              <mat-header-cell *matHeaderCellDef > Fees </mat-header-cell>
+                                                              
+                                                                  <mat-cell *matCellDef="let element"> {{element.feeamt}} </mat-cell>
+                                                      
+                                                              
+                                                            </ng-container>
+
+                                                            <ng-container matColumnDef="act2">
+                                                                <mat-header-cell *matHeaderCellDef [ngClass]="'commandright'">  </mat-header-cell>
+                                                                <mat-cell *matCellDef="let row" [ngClass]="'commandright'"> 
+                                                                        <a> <i class="fa fa-minus-circle commandicons" style="font-weight: bold" (click)="deletefnc(row)"></i></a>
+                                                                    <!-- <button mat-icon-button color="accent" data-toggle="modal" > <i class="material-icons">edit</i></button>
+                                                                    <button mat-icon-button color="accent" (click)="deletefnc(row)"> <i class="material-icons">delete</i></button> -->
+                                                                </mat-cell>
+                                                            </ng-container>  
+                                                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                                                          </mat-table>
+                                       
+                        
+                        </div></div>
+                       
+                            
+                         
+                    </mat-card-content>
+                   
+                   <!-- <button class="btn btn-primary " style="float:right !important" data-toggle="modal" data-dismiss="modal" data-target="#myModal" ><i class="fa fa-plus" aria-hidden="true"></i>Add</button> -->
+            
+                </mat-card>
+            </div>
+        </div>
+
+
+        <div id="myModal" class="modal fade"  modal="delbcat" data-backdrop="false" role="dialog">
+            <form name="form" (ngSubmit)="f.form.valid && savedetails(f)" #f="ngForm" novalidate>
+            <div class="modal-dialog ">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title"></h4>
+                  <button type="button" class="close" data-dismiss="modal" #closeAddExpenseModal ng-click="dclb()">&times;</button>
+                </div>
+                <div class="modal-body"> 
+
+                    <div class="row">
+                        <div class="col-md-4 ">
+                            <mat-form-field class="pad-l-0 full-width">
+                                <input matInput placeholder="Fees" name="feeamt" [(ngModel)]="feemodel.feeamt" #feeamt="ngModel" pattern='^[0-9]*$'
+                                >
+
+                                <mat-error *ngIf=" !feeamt.valid">
+                                    Please enter amount
+                                  </mat-error>
+                                    
+                            </mat-form-field>
+                        </div>
+                        
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 col-md-offset-right-6">
+                            <mat-form-field class="pad-l-0 full-width">
+                                <mat-select placeholder="Company" name="coid" [(ngModel)]="feemodel.coid" #coid="ngModel" required>
+                                    <mat-option *ngFor="let acyr of houses" [value]="acyr.value">
+                                        {{ acyr.viewValue }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-md-offset-right-6">
+                            <mat-form-field class="pad-l-0 full-width">
+                                <mat-select placeholder="Perticular" name="accid" [(ngModel)]="feemodel.accid" #accid="ngModel" required>
+                                    <mat-option *ngFor="let acyr of achead" [value]="acyr.accid">
+                                        {{ acyr.accname }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        
+                    </div>
+                    <!-- <h1>
+                        Creating Dynamic Textboxes (rows)
+                      </h1>
+                      <input type="button" value="Add Rows" (click)="addRow()"/>
+                      <div *ngFor="let item of row; let i=index">
+                        <input type="text" name="name{{i}}" [(ngModel)]="item.name"> 
+                        <input type="button" value="Delete Rows" (click)="deleteRow(i)"/>
+                      </div>
+
+
+                      <div *ngFor="let item of row; let i=index">
+                          <div class="row">
+                            <div ></div>  
+                          </div>
+                        <input type="text" name="name{{i}}" [(ngModel)]="item.name"> 
+                        <input type="button" value="Delete Rows" (click)="deleteRow(i)"/>
+                      </div> -->
+                    <div class="modal-footer">
+                        <button class="btn btn-primary btn-round commandbtn " ><i class="fa fa-check" aria-hidden="true"></i>Save</button>
+                        <button type="button" class="btn btn-secondary btn-round commandbtn" data-dismiss="modal" ng-click="dclb()" (click)="c('Close click')">Close</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </form>
+          </div>
+
+
+      
+        </section>
+</div>
+

@@ -1,0 +1,112 @@
+<div class="content-wrapper">
+    <section class="content-header">
+       
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Masters</a></li>
+            
+            <li class="active">Class</li>
+        </ol>
+    </section>
+    <section class="content">
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <mat-card class="dbox">
+                    <div class="dbox-header">
+                        <!-- <mat-card-title> Widgets </mat-card-title> -->
+                        <div class="row"> <div class="col-md-12" > 
+                          <!-- <button mat-icon-button color="accent" style="float:right !important" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')" > <i class="material-icons">add</i>Add</button> -->
+                          <button class="btn btn-primary " style="float:right !important" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(model,'insert')"><i class="fa fa-plus" aria-hidden="true"></i> New Record</button>
+                        
+                        </div></div>
+                     
+                    </div>
+                    <mat-card-content>
+                       
+                            <mat-table #table [dataSource]="dataSource" >
+                          
+                              <!-- Position Column -->
+                              <ng-container matColumnDef="action">
+                                <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'">  </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass'"> 
+                                        <a> <i class="fa fa-edit commandicons" style="font-weight: bold" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')"  ></i></a>
+                                <!-- <button mat-icon-button color="accent" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')" > <i class="material-icons">edit</i></button>
+                                <button mat-icon-button color="accent" (click)="deletefnc(row)" > <i class="material-icons">delete</i></button> -->
+                                
+                                      
+                                  </mat-cell>
+                              </ng-container>
+                              <ng-container matColumnDef="clcode">
+                                <mat-header-cell *matHeaderCellDef   > Code </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.clcode}} </mat-cell>
+                              </ng-container>
+                          
+                              <!-- Name Column -->
+                              <ng-container matColumnDef="clname">
+                                <mat-header-cell *matHeaderCellDef > Name </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.clname}} </mat-cell>
+                              </ng-container>
+                          
+                              <ng-container matColumnDef="act2">
+                                <mat-header-cell *matHeaderCellDef [ngClass]="'commandright'">  </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [ngClass]="'commandright'"> 
+                                        <a> <i class="fa fa-minus-circle commandicons" style="font-weight: bold" (click)="deletefnc(row)"></i></a>
+                                    <!-- <button mat-icon-button color="accent" data-toggle="modal" > <i class="material-icons">edit</i></button>
+                                    <button mat-icon-button color="accent" (click)="deletefnc(row)"> <i class="material-icons">delete</i></button> -->
+                                </mat-cell>
+                            </ng-container>     
+                          
+                              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                            </mat-table>
+                         
+                    </mat-card-content>
+                </mat-card>
+            </div>
+
+        </div>
+
+
+        <div id="myModal" class="modal fade"  modal="delbcat" data-backdrop="false" role="dialog">
+            <form name="form" (ngSubmit)="f.form.valid && SaveclassDetails(f)" #f="ngForm" novalidate>
+            <div class="modal-dialog ">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">{{title}}</h4>
+                  <button type="button" class="close" data-dismiss="modal" #closeAddExpenseModal ng-click="dclb()">&times;</button>
+                </div>
+                <div class="modal-body"> 
+
+                    <div class="row">
+                        <div class="col-md-6">
+                           <mat-form-field class="full-width pad-r-0">
+                            <input matInput name="clcode" [(ngModel)]="model.clcode" #clcode="ngModel" placeholder="Code" maxlength="15" required>
+                          </mat-form-field>
+                        </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-6">
+                               <mat-form-field class="full-width pad-r-0">
+                                <input matInput name="clname" [(ngModel)]="model.clname" #clname="ngModel" placeholder="Name" maxlength="15" required>
+                              </mat-form-field>
+                            </div>
+                            </div>
+
+
+                          <input type="hidden" name="dbnm" [(ngModel)]="tempdbnm" #dbnm="ngModel" >
+                          <input type="hidden" name="clid" [(ngModel)]="model.clid" #clid="ngModel" >
+                          <input type="hidden" name="oprtag" [(ngModel)]="oprtype" #oprtag="ngModel" >
+                    <div class="modal-footer">
+                        <button class="btn btn-primary btn-round commandbtn " ><i class="fa fa-check" aria-hidden="true"></i>Save</button>
+                        <button type="button" class="btn btn-secondary btn-round commandbtn" data-dismiss="modal" ng-click="dclb()" (click)="c('Close click')">Close</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </form>
+          </div>
+        </section>
+</div>

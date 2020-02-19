@@ -1,0 +1,215 @@
+<div class="content-wrapper">
+    <section class="content-header">
+       
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Classroom</a></li>
+            <li class="active">Attendance</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-card class="dbox">
+                    <div class="col-sm-12">
+                       
+<!-- 
+                            <div class="col-sm-2">
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker" placeholder="Attendance Date" name="attdt" [(ngModel)]="model.attdt" #dob="ngModel"
+                                        required>
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div> -->
+
+                            <div class="col-sm-2">
+                                <mat-form-field class="pad-l-0 full-width">
+                                    <mat-select placeholder="Branch " name="brid" (selectionChange)="by_sp_student()" [(ngModel)]="model.brid" #brid="ngModel">
+                                        <mat-option *ngFor="let k of masbranch" [value]="k.id">
+                                            {{ k.name }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <mat-form-field class="pad-l-0 full-width">
+                                    <mat-select placeholder="Class " name="clid" (selectionChange)="by_sp_student()" [(ngModel)]="model.clid" #clid="ngModel">
+                                        <mat-option *ngFor="let k of mascls" [value]="k.clid">
+                                            {{ k.clname }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <mat-form-field class="pad-l-0 full-width">
+                                    <mat-select placeholder="Section" name="secid" (selectionChange)="by_sp_student()" [(ngModel)]="model.secid" #secid="ngModel">
+                                        <mat-option *ngFor="let k of massec" [value]="k.secid">
+                                            {{ k.secname }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <mat-form-field class="pad-l-0 full-width">
+                                    <mat-select placeholder="Student" name="stuid" [(ngModel)]="model.stuid" #stuid="ngModel" (selectionChange)="getissueddetails()" >
+                                        <mat-option *ngFor="let k of studata" [value]="k.stuid">
+                                            {{ k.name }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <button class="btn btn-primary btn-round commandbtn" (click)="getissueddetails()"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                       
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                    <div class="col-sm-8 col-md-4 ">  
+                        <form class="example-form">
+                            <mat-form-field class="example-full-width">
+                                <mat-icon matSuffix>search</mat-icon>
+                              <input type="text"
+                              [(ngModel)]="selitem"
+                                     placeholder="Search by Book Id,Name"
+                                     aria-label="Number"
+                                     matInput
+                                     [formControl]="myControl"
+
+                                     [matAutocomplete]="auto">
+                              <mat-autocomplete #auto="matAutocomplete" [displayWith]="AutoCompleteDisplay" >
+                                <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="OnHumanSelected(selitem)">
+                                 
+
+                                  <div matLine>
+                                    <b>{{option.booktitle}} </b>
+                                    <span style="color:red;">{{option.author}} </span>
+                                </div>
+                                
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>
+                          </form>
+                      
+                      
+                    </div>  
+                    <div class="col-sm-4 col-md-2 ">
+
+                        <button class="btn btn-primary "   (click)="Addbook()"><i class="fa fa-plus" aria-hidden="true"></i> Issue Book</button>
+                    </div>
+                </div>
+                </div> 
+                <div class="row"><div class="col-sm-12"><mat-card-content>
+                        <mat-table #table [dataSource]="dataSource">
+
+                             <ng-container matColumnDef="booktitle">
+                                <mat-header-cell *matHeaderCellDef> Booktitle </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{ element.booktitle }} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="issue">
+                                <mat-header-cell *matHeaderCellDef> Issued Date </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{ element.issuedt }} </mat-cell>
+                            </ng-container> 
+                            <ng-container matColumnDef="due">
+                                <mat-header-cell *matHeaderCellDef> Due Date </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{ element.duedt }} </mat-cell>
+                            </ng-container> 
+
+                     
+                            <ng-container matColumnDef="cnt">
+                                <mat-header-cell *matHeaderCellDef> Due Days </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> 
+                                    <span class="badge" [ngClass]="{'bg-green':element.duecount>=0, 'bg-red': element.duecount<0}">{{ element.duecount }}</span>    
+                                </mat-cell>
+                            </ng-container> 
+                            <ng-container matColumnDef="status">
+                                <mat-header-cell *matHeaderCellDef> Staus </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> 
+                                    {{ element.bkretstatus }}
+                                     </mat-cell>
+                            </ng-container> 
+
+                            <ng-container matColumnDef="commands">
+                                <mat-header-cell *matHeaderCellDef >  </mat-header-cell>
+                                <mat-cell *matCellDef="let row" > 
+                                        <!-- <a> <i class="fa fa-minus-circle commandicons" style="font-weight: bold" (click)="deletefnc(row)"></i></a> -->
+                                    <!-- <button mat-icon-button color="accent" data-toggle="modal" > <i class="material-icons">edit</i></button>-->
+                                    <button class="btn btn-info btn-xs" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')">Return/Renew </button> 
+                                </mat-cell>
+                            </ng-container>
+                            
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                        </mat-table>
+
+                    </mat-card-content></div></div> 
+                    
+                     <!-- <button class="btn btn-primary btn-round commandbtn" (click)="AttendancePerDetails()" style="margin-left: 1150px;"><i class="fa fa-save" aria-hidden="true"></i> Save</button>  -->
+                </mat-card>
+            </div>
+           
+        </div>
+    </section>
+</div>
+
+
+<div id="myModal" class="modal fade" modal="delbcat" data-backdrop="false" role="dialog">
+    <form name="form" (ngSubmit)="f.form.valid && SaveDetails(f)" #f="ngForm" novalidate>
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{title}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" #closeAddExpenseModal ng-click="dclb()">&times;</button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-6">
+
+                                <mat-form-field>
+                                    <mat-select placeholder="Select Option"  name="oprtype"
+                                    [(ngModel)]="detmodel.oprtype"  #oprtype="ngModel">
+                                   <mat-option *ngFor="let acyr of acYears" [value]="acyr.value">
+                                     {{ acyr.viewValue }}
+                                   </mat-option>
+                                 </mat-select>
+                                      </mat-form-field>
+                            <!-- <mat-form-field class="full-width pad-r-0">
+                                <input matInput name="hwdt" [(ngModel)]="model.hwdt" #hwdt="ngModel" placeholder="Assignment Date" maxlength="15" required>
+                            </mat-form-field> -->
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+
+                                <mat-form-field>
+                                        <input matInput [matDatepicker]="picker1" name="recdt" [(ngModel)]="detmodel.recdt" #recdt="ngModel" placeholder="Ret/Ren Date" required>
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                      </mat-form-field>
+                            <!-- <mat-form-field class="full-width pad-r-0">
+                                <input matInput name="duedt" [(ngModel)]="model.duedt" #duedt="ngModel" placeholder="Due Date" maxlength="15" required>
+                            </mat-form-field> -->
+                        </div>
+                    </div>
+                
+<!-- 
+
+                    <input type="hidden" name="dbnm" [(ngModel)]="tempdbnm" #dbnm="ngModel">
+                    <input type="hidden" name="clid" [(ngModel)]="model.clid" #clid="ngModel">
+                    <input type="hidden" name="secid" [(ngModel)]="model.secid" #secid="ngModel">
+                    <input type="hidden" name="stuid" [(ngModel)]="model.secid" #secid="ngModel"> -->
+                    <!-- <input type="hidden" name="oprtag" [(ngModel)]="oprtype" #oprtag="ngModel"> -->
+                    <div class="modal-footer">
+                        <button class="btn btn-primary btn-round commandbtn "><i class="fa fa-check" aria-hidden="true"></i>Save</button>
+                        <button type="button" class="btn btn-secondary btn-round commandbtn" data-dismiss="modal" ng-click="dclb()" (click)="c('Close click')">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

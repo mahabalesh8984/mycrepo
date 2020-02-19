@@ -1,0 +1,234 @@
+
+<div class="content-wrapper">
+        <section class="content-header">
+            
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Fee Counter</a></li>
+                
+                <li class="active">Miscellaneous</li>
+            </ol>
+        </section>
+        <section class="content">
+    
+    
+            <div class="row">
+               
+                    <div class="col-md-12 ">
+                    <mat-card class="dbox">
+                        <div class="dbox-header">
+                                
+                               
+                            
+                        
+                         
+                        </div>
+                        
+                        <mat-card-content>
+                        
+                        
+                        
+                                <div class="row">
+                                        <div class="col-md-8">      
+                        
+                            <div class="row">
+                        
+                        
+                        
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <mat-select placeholder="Payee Type" name="coid" [(ngModel)]="model.coid" #coid="ngModel">
+                                            <mat-option *ngFor="let k of mascompany" [value]="k.coid">
+                                                {{ k.conm }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-md-6">
+                                        <mat-form-field   class="col-md-6">
+                                                <input matInput [matDatepicker]="picker4"  placeholder="Receipt Date" name="paydt" [(ngModel)]="model.paydt" #paydt="ngModel" required>
+                                                <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker4></mat-datepicker>
+                                              </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                        
+                        
+                        
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <mat-select placeholder="Company(Fr)" name="coid" [(ngModel)]="model.coid" #coid="ngModel">
+                                            <mat-option *ngFor="let k of mascompany" [value]="k.coid">
+                                                {{ k.conm }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-md-6">
+                                        <mat-form-field>
+                                            <mat-select placeholder="Department" name="deptid" [(ngModel)]="model.deptid" #deptid="ngModel">
+                                                <mat-option *ngFor="let k of masdept" [value]="k.deptid">
+                                                    {{ k.deptnm }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                            </div>
+                            
+                        
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <mat-select placeholder="Payee Name(Fr)" name="deptid" [(ngModel)]="model.deptid" #deptid="ngModel">
+                                            <mat-option *ngFor="let k of masdept" [value]="k.deptid">
+                                                {{ k.deptnm }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-md-6">
+                                        <mat-form-field style="width:250px !important">
+                                            <mat-select placeholder="Account Name" name="accid" [(ngModel)]="model.accid" required>
+                                                <mat-option *ngFor="let k of masachead" [value]="k.accid">
+                                                    {{ k.accname }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                            </div>
+                           
+                        
+                            
+
+                                
+                          
+
+                                
+                            <div class="row">
+                                    <div class="col-md-6">
+                                        <mat-form-field style="width:250px !important">
+                                                <input matInput placeholder="Amount" name="amount" [(ngModel)]="model.amount" #amount="ngModel" required>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                            <mat-form-field style="width:250px !important">
+                                                    <input matInput placeholder="Remarks" name="remarks" [(ngModel)]="model.remarks" #remarks="ngModel" >
+                                            </mat-form-field>
+                                        </div>
+                                </div>
+
+
+                              </div>  
+                            
+              
+                       <div class="col-md-4">
+                            <mat-card class="dbox">
+                                <mat-card-header class="dbox-header">
+                                    <mat-card-title>Payment</mat-card-title>
+            
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                                
+                                                <div class="col-md-8">
+                                                    <mat-form-field >
+                                                        <mat-select placeholder="Mode of Receipt" name="mor" [(ngModel)]="coldetails.mor" #mor="ngModel">
+                                                            <mat-option *ngFor="let acyr of mordet" [value]="acyr.viewValue">
+                                                                {{ acyr.viewValue }}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                    </div>
+                                          
+                                        </div>
+                                    </div>
+    
+    
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                                
+                                                <div class="col-md-8">
+                                                        <mat-form-field >
+                                                                <input matInput name="cqno"  [(ngModel)]="coldetails.cqno" #cqno="ngModel" placeholder="Cheque/DD No"  >
+                                                              </mat-form-field>
+                                                    </div>
+                                          
+                                        </div>
+                                    </div>
+    
+    
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                                
+                                                <div class="col-md-8">
+                                                    <mat-form-field>
+                                                        <input matInput [matDatepicker]="chqdt" placeholder="Cheque Date" name="cqdt" [(ngModel)]="coldetails.cqdt" #cqdt="ngModel" >
+                                                        <mat-datepicker-toggle matSuffix [for]="chqdt"></mat-datepicker-toggle>
+                                                        <mat-datepicker #chqdt></mat-datepicker>
+                                                      </mat-form-field>
+                                                    </div>
+                                          
+                                        </div>
+                                    </div>
+    
+    
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                                
+                                                <div class="col-md-8">
+                                                        <mat-form-field >
+                                                                <input matInput name="bknm"  [(ngModel)]="coldetails.bknm" #bknm="ngModel" placeholder="Bank Name"  >
+                                                              </mat-form-field>
+                                                    </div>
+                                          
+                                        </div>
+                                    </div>
+    
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                                
+                                                <div class="col-md-8">
+                                                        <mat-form-field >
+                                                                <input matInput name="ifsc"  [(ngModel)]="coldetails.ifsc" #ifsc="ngModel" placeholder="Branch/IFSC"  >
+                                                              </mat-form-field>
+                                                    </div>
+                                          
+                                        </div>
+                                    </div>
+    
+                                </mat-card-content>
+                            </mat-card>
+                        </div>    </div>                     
+                        <div class="row">
+                                
+
+                                 <div class="col-md-12"> 
+                                         <button class="btn btn-primary " style="float:right !important" data-toggle="modal" data-dismiss="modal" data-target="#myModal" ><i class="fa fa-check" aria-hidden="true"></i>Save</button>
+                                         </div>
+                             </div>
+                    
+                    
+                 </mat-card-content>
+                    </mat-card>
+                </div>
+    
+            </div>
+            
+                   
+                   
+    
+                   
+    
+                    
+                   
+                      
+        
+                   
+    </section>
+    </div>
+     

@@ -1,0 +1,18 @@
+.readonly-wrapper {
+    cursor: not-allowed;
+}
+
+.readonly-wrapper .readonly-block {
+    pointer-events: none;
+}
+
+
+.mat-form-field-disabled .mat-form-field-underline {
+    /* background-image: -webkit-gradient(linear,left top, right top,color-stop(0, rgba(0,0,0,.42)),color-stop(33%, rgba(0,0,0,.42)),color-stop(0, transparent));
+    /* background-image: linear-gradient(to right,rgba(0,0,0,.42) 0,rgba(0,0,0,.42) 33%,transparent 0); */
+    background-image:none;
+    position: absolute;
+    height: 1px;
+    width: 100%;
+    background-color: rgba(0,0,0,.42);
+}

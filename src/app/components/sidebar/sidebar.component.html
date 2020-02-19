@@ -1,0 +1,64 @@
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+
+
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul *ngFor="let post of _postsArray" class="sidebar-menu" data-widget="tree">
+            <!-- <li class="header">MAIN NAVIGATION</li> -->
+
+            <li *ngIf="post.mlabel!=null"><a href="" class=" treeview" [ngClass]="{'disabled':post.parent_id=='0'}" style="background-color:rgb(6, 121, 170);border:none;color:#fff;padding:10px ;margin-left:0px !important  ">
+                
+                <i class="fa fa-circle-o"></i> 
+                <span>{{post.mlabel}}</span>
+                <span class="pull-right-container">
+                  
+                </span>
+            </a></li>
+            <li  class=" treeview"   style="padding: 0px;" routerLinkActive="active">
+                <!-- <ul>
+                        <li class="header">{{post.mnm}}</li>
+                </ul> -->
+                <!-- <span  style="color:#fff;padding: 10px 25px 10px 15px;background-color:#0095DA;width:">--{{post.mlabel}}--</span> -->
+                <!-- <a href="" style="background-color:#0095DA;border:none;color:#fff;padding:10px   ">
+                     <span>{{post.mlabel}}</span>
+                    
+                      
+                    </a> -->
+                  
+                    <!-- <a href="" [ngClass]="{'disabled':post.parent_id=='0'}" style="background-color:rgb(6, 121, 170);border:none;color:#fff;padding:10px   ">
+                        <span>{{post.mlabel}}</span>
+                        <span class="pull-right-container">
+                          
+                        </span>
+                    </a> -->
+               
+                <a href="" >
+                    <i class="fa fa-{{post.icon}}"></i> <span>{{post.mnm}}</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li *ngFor="let cpost of post.children"  routerLinkActive="active">
+                        <a routerLink="{{cpost.url}}"><i class="fa fa-chevron-right"></i> {{cpost.mnm}}</a>
+                    </li>
+                </ul>
+
+            </li>
+
+
+
+
+
+
+            <!-- <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
+            <li class="header">LABELS</li>
+            <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
+            <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
+            <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li> -->
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

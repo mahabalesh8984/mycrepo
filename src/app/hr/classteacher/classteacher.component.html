@@ -1,0 +1,140 @@
+<div class="content-wrapper">
+    <section class="content-header">
+       
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> HR</a></li>
+<li>Allocation</li>
+            <li class="active">Classteacher</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-card class="dbox">
+                        <div class="dbox-header">
+                    
+                        <div class="row">
+                                <div class="col-sm-12">
+                            <div class="col-sm-3">
+                                
+                            </div>
+                            <div class="col-sm-3">
+                                
+                            </div>
+                            
+<div class="col-sm-6">   <button class="btn btn-primary " style="float:right !important" data-toggle="modal" data-dismiss="modal" data-target="#myModal"
+    (click)="opendialog(model,'insert')"><i class="fa fa-plus" aria-hidden="true"> New Record</i></button></div>
+                    </div></div></div>
+                 
+                    <mat-card-content>
+                        <mat-table #table [dataSource]="dataSource">
+                            <!-- Position Column -->
+                            <!-- Position Column -->
+                
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="actedit">
+                                <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'">  </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass'"> 
+                                        <a> <i class="fa fa-edit commandicons" style="font-weight: bold" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')"  ></i></a>
+                                <!-- <button mat-icon-button color="accent" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')" > <i class="material-icons">edit</i></button>
+                                <button mat-icon-button color="accent" (click)="deletefnc(row)" > <i class="material-icons">delete</i></button> -->
+                                
+                                      
+                                  </mat-cell>
+                              </ng-container>
+                            <ng-container matColumnDef="clname">
+                                <mat-header-cell *matHeaderCellDef> Class </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.clname}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="secname">
+                                <mat-header-cell *matHeaderCellDef> Section </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.secname}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="emnm">
+                                <mat-header-cell *matHeaderCellDef> Staff </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.emnm}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="action">
+                                <mat-header-cell *matHeaderCellDef [ngClass]="'commandright'">  </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [ngClass]="'commandright'"> 
+                                        <a> <i class="fa fa-minus-circle commandicons" style="font-weight: bold" (click)="deletefnc(row)"></i></a>
+                                    <!-- <button mat-icon-button color="accent" data-toggle="modal" > <i class="material-icons">edit</i></button>
+                                    <button mat-icon-button color="accent" (click)="deletefnc(row)"> <i class="material-icons">delete</i></button> -->
+                                </mat-cell>
+                            </ng-container>     
+                         
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                        </mat-table>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+
+        <div id="myModal" class="modal fade" modal="delbcat" data-backdrop="false" role="dialog">
+            <form name="form" (ngSubmit)="f.form.valid && SaveDetails(f)" #f="ngForm" novalidate>
+                <div class="modal-dialog ">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">{{title}}</h4>
+                            <button type="button" class="close" data-dismiss="modal" #closeAddExpenseModal ng-click="dclb()">&times;</button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="row">
+
+                                <div class="col-sm-6">
+                                    <mat-form-field class="pad-l-0 full-width">
+                                          
+                                        <mat-select placeholder="Class "  name="clid" [(ngModel)]="model.clid" #clid="ngModel" [disabled]="diseditcontl">
+                                            <mat-option *ngFor="let k of mascls" [value]="k.clid">
+                                                {{ k.clname }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                
+                            <div class="col-sm-6">
+                                <mat-form-field class="pad-l-0 full-width readonly-wrapper">
+                                    <mat-select placeholder="Section"   name="secid" [(ngModel)]="model.secid" #secid="ngModel" [disabled]="diseditcontl" >
+                                        <mat-option *ngFor="let k of massec" [value]="k.secid">
+                                            {{ k.secname }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                            </div>
+                        </div>
+
+                     <div class="row">
+                            
+                        <div class="col-sm-6">
+                            <mat-form-field class="pad-l-0 full-width">
+                                <mat-select placeholder="Staff"  name="emid" [(ngModel)]="model.emid" #emid="ngModel">
+                                    <mat-option *ngFor="let k of lstemp" [value]="k.emid">
+                                        {{ k.emnm }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                        </div>
+                    </div>
+
+                            <input type="hidden" name="dbnm" [(ngModel)]="tempdbnm" #dbnm="ngModel">
+                            <input type="hidden" name="clid" [(ngModel)]="model.clid" #clid="ngModel">
+                            <input type="hidden" name="oprtag" [(ngModel)]="oprtype" #oprtag="ngModel">
+                            <div class="modal-footer">
+                                <button class="btn btn-primary btn-round commandbtn "><i class="fa fa-check" aria-hidden="true"></i>Save</button>
+                                <button type="button" class="btn btn-secondary btn-round commandbtn" data-dismiss="modal" ng-click="dclb()" (click)="c('Close click')">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>

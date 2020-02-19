@@ -1,0 +1,123 @@
+<div class="content-wrapper">
+    <section class="content-header">
+       
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Classroom</a></li>
+            <li class="active">Attendance</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-card class="dbox">
+                    <div class="col-sm-12">
+                        <form name="form" (ngSubmit)="f.form.valid && SelectAttdDetails()" #f="ngForm" novalidate>
+                            <div class="col-sm-2">
+                                <mat-form-field class="pad-l-0 full-width">
+                                    <mat-select placeholder="Branch " name="brid"  [(ngModel)]="model.brid" #brid="ngModel">
+                                        <mat-option *ngFor="let k of masbranch" [value]="k.id">
+                                            {{ k.name }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-2">
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker" placeholder="Attendance Date" name="attdt" [(ngModel)]="model.attdt" #dob="ngModel"
+                                        required>
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <mat-form-field class="pad-l-0 full-width">
+                                    <mat-select placeholder="Class name" name="clid" (change)="SelectAttdDetails()" [(ngModel)]="model.clid" #clid="ngModel">
+                                        <mat-option *ngFor="let k of mascls" [value]="k.clid">
+                                            {{ k.clname }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <mat-form-field class="pad-l-0 full-width">
+                                    <mat-select placeholder="Section name" name="secid" [(ngModel)]="model.secid" #clid="ngModel">
+                                        <mat-option *ngFor="let k of massec" [value]="k.secid">
+                                            {{ k.secname }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <button class="btn btn-primary btn-round commandbtn" (click)="SelectAttdDetails()"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                        </form>
+                    </div>
+
+                    <mat-card-content>
+                        <mat-table #table [dataSource]="dataSource">
+
+                             <ng-container matColumnDef="rollno">
+                                <mat-header-cell *matHeaderCellDef> Roll-No </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{ element.rollno }} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef> Student Name </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+                            </ng-container> 
+
+                            <!-- status m Column -->
+                            <ng-container matColumnDef="attstatus">
+                                <mat-header-cell *matHeaderCellDef> Morning </mat-header-cell>
+                                <mat-cell *matCellDef="let element">
+                                    <section class="example-section">
+                                        <section class="example-section">
+                                            <mat-slide-toggle [(ngModel)]="element.attstatus"
+                                               
+                                                class="example-margin"
+                                                [color]="color"
+                                             >
+                                                <!-- {{element.attstatus}} -->
+                                            </mat-slide-toggle>
+                                        </section>
+                                    </section>
+                                </mat-cell>
+                            </ng-container>
+<!-- status a Column -->
+                            <ng-container matColumnDef="attstatusaf">
+                                <mat-header-cell *matHeaderCellDef> Afternoon </mat-header-cell>
+                                <mat-cell *matCellDef="let element">
+                                    <section class="example-section">
+                                        <section class="example-section">
+                                            <mat-slide-toggle [(ngModel)]="element.attstatusaf"
+                                               
+                                                class="example-margin"
+                                                [color]="color"
+                                             >
+                                                <!-- {{element.attstatus}} -->
+                                            </mat-slide-toggle>
+                                        </section>
+                                    </section>
+                                </mat-cell>
+                            </ng-container>
+
+                             <ng-container matColumnDef="attrmk">
+                                <mat-header-cell *matHeaderCellDef> Remarks </mat-header-cell>
+                                <mat-cell *matCellDef="let element">
+                                    <input name="attrmk" [(ngModel)]="element.attrmk" type="text">
+
+                                </mat-cell>
+                            </ng-container> 
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                        </mat-table>
+
+                    </mat-card-content>
+                     <button class="btn btn-primary btn-round commandbtn" (click)="AttendanceDetails()" style="margin-left: 1150px;"><i class="fa fa-save" aria-hidden="true"></i> Save</button> 
+                </mat-card>
+            </div>
+            
+        </div>
+    </section>
+</div>
