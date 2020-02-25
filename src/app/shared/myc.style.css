@@ -232,6 +232,10 @@ col-md-6 {
     color: rgba(0, 0, 0, 0.849);
     font-weight: bold;
 }
+.mystyle
+{
+    color:#fff;
+}
 /* .mat-row {
     min-height:30px;
   } */
