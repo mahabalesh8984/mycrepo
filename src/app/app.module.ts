@@ -16,6 +16,7 @@ import {
 
  import {
   BookissueComponent,
+  BooksComponent,
 
  } from './Library/index';
 
@@ -170,7 +171,8 @@ YrcalenderComponent,
     C401HComponent ,
     DialogContentExampleDialog,
     TableComponent,
-    BookissueComponent
+    BookissueComponent,
+    BooksComponent
     ],
   imports: [
     MatDatepickerModule, MatNativeDateModule,

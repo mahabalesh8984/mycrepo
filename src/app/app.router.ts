@@ -16,6 +16,7 @@ import {
 
 import {
   BookissueComponent,
+  BooksComponent,
 
  } from './Library/index';
 
@@ -140,6 +141,7 @@ const ROUTES: Routes = [
       {path: 'holidays', component: HolidaysComponent},
       {path: 'yrcalender', component: YrcalenderComponent},
       {path: 'bookissue', component: BookissueComponent},
+      {path: 'books', component: BooksComponent},
         
       ]
     },
