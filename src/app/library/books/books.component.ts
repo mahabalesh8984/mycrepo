@@ -8,7 +8,10 @@ import { DatePipe } from '@angular/common';
 import { NgForm } from '@angular/forms';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+
+import { Router,ActivatedRoute } from '@angular/router';
+
+
 
 
 
@@ -47,6 +50,10 @@ export class BooksComponent implements OnInit {
 
   selbooktitle:string='';
   selbookid:bigint;
+
+  display='none';
+
+  private mdlSampleIsOpen : boolean = false;
   acYears = [
     {value: 'Academic', viewValue: 'Academic'},
     {value: 'Reference', viewValue: 'Reference'},
@@ -61,8 +68,34 @@ export class BooksComponent implements OnInit {
     
   
   ];
-  constructor(private http: HttpClient, private datePipe: DatePipe, private _global: AppGlobals, private SService: MasterService,private libservice: LibraryService) { }
+  bookid:any;
+  constructor(private http: HttpClient, private datePipe: DatePipe, private _global: AppGlobals, private SService: MasterService,private libservice: LibraryService,private route: ActivatedRoute,) { }
   ngOnInit() {
+
+
+    this.route.params.subscribe(params => {
+      console.log("params",params);
+    var bookid=params['bookid'];
+    if(bookid)
+    {
+      this.bookid=params['bookid'];
+    }
+    else
+    {
+      this.bookid=0;
+    }
+      // if(this.encRequest.toUpperCase()=="INITIATED")
+      // {
+
+      //   this.payresponse="Your Transaction was not Suucessful." 
+      // }
+      
+      // else
+      // {
+      // this.payresponse=params['retmsg'];
+      // }
+     
+    });
 
       this.model.clid = '1';
       this.model.secid = '1';
@@ -87,9 +120,15 @@ export class BooksComponent implements OnInit {
     //   this.by_sp_student();
       //this.SaveAttdDetails();
       this.getbookdetails();
+      if(this.bookid!=0)
+      {
+this.opendialog(this.model,'insert');
+       
+      }
   }
   
-
+ 
+  
   AutoCompleteDisplay(item: any): string {
     if (item == undefined) { return }
     return  item.booktitle;
@@ -157,6 +196,13 @@ export class BooksComponent implements OnInit {
       this.asnamehead='Modify Book Details';
   }
   this.model.oprtype=cmd;
+  this.mdlSampleIsOpen = true;
+  }
+
+  modalclose()
+  {
+
+    this.mdlSampleIsOpen = false;
   }
 
   SaveDetails(f: NgForm) {

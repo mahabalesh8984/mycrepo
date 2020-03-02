@@ -137,6 +137,7 @@
                                 <mat-cell *matCellDef="let row" > 
                                         
                                     <button class="btn btn-info btn-xs" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')">Return/Renew </button> 
+                                    <button class="btn btn-warning btn-xs" [routerLink]="['/app/books',row.bookid]"  [routerLinkActive]="['active']">Replace</button> 
                                 </mat-cell>
                             </ng-container>
                             
@@ -193,6 +194,33 @@
                             <!-- <mat-form-field class="full-width pad-r-0">
                                 <input matInput name="duedt" [(ngModel)]="model.duedt" #duedt="ngModel" placeholder="Due Date" maxlength="15" required>
                             </mat-form-field> -->
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+
+                                <mat-form-field>
+                                    <mat-select placeholder="Fine Reason"  name="reason"
+                                    [(ngModel)]="detmodel.reason"  #reason="ngModel">
+                                   <mat-option *ngFor="let acyr of finereasons" [value]="acyr.value">
+                                     {{ acyr.viewValue }}
+                                   </mat-option>
+                                 </mat-select>
+                                      </mat-form-field>
+                            <!-- <mat-form-field class="full-width pad-r-0">
+                                <input matInput name="hwdt" [(ngModel)]="model.hwdt" #hwdt="ngModel" placeholder="Assignment Date" maxlength="15" required>
+                            </mat-form-field> -->
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+
+                                <mat-form-field>
+                                    <input matInput name="amount" [(ngModel)]="detmodel.amount" #amount="ngModel" placeholder="Fineamount" maxlength="50" >
+                                      </mat-form-field>
+                           
                         </div>
                     </div>
                 

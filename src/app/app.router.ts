@@ -141,7 +141,8 @@ const ROUTES: Routes = [
       {path: 'holidays', component: HolidaysComponent},
       {path: 'yrcalender', component: YrcalenderComponent},
       {path: 'bookissue', component: BookissueComponent},
-      {path: 'books', component: BooksComponent},
+      // {path: 'books', component: BooksComponent},
+      {path: 'books/:bookid', component: BooksComponent},
         
       ]
     },

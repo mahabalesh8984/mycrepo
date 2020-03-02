@@ -9,6 +9,8 @@ import { NgForm } from '@angular/forms';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import { Router,ActivatedRoute } from '@angular/router';
+
 
 
 export interface bookdata {
@@ -59,14 +61,23 @@ export class BookissueComponent implements OnInit {
   selitem: bookdata ;
   selbooktitle:string='';
   selbookid:bigint;
+
   acYears = [
     {value: 'return', viewValue: 'Return'},
     {value: 'renew', viewValue: 'Renew'},
   
   ];
-  constructor(private http: HttpClient, private datePipe: DatePipe, private _global: AppGlobals, private SService: MasterService) { }
-  ngOnInit() {
 
+  finereasons = [
+    {value: 'NONE', viewValue: 'None'},
+    {value: 'Latefee', viewValue: 'Latefee'},
+    {value: 'Damaged', viewValue: 'Damaged'},
+  
+  ];
+  
+  constructor(private http: HttpClient, private datePipe: DatePipe, private _global: AppGlobals, private SService: MasterService,private route:Router) { }
+  ngOnInit() {
+  
       this.model.clid = '1';
       this.model.secid = '1';
       this.model.stuid = '0';
@@ -114,6 +125,12 @@ return this.serboks;
     if (item == undefined) { return }
     return  item.booktitle;
     
+  }
+  replacebook(bookid)
+  {
+
+    this.route.navigate(['/app/books', bookid]);
+    //this.route.navigateByUrl('/books/'+bookid);
   }
 
   Addbook()
@@ -244,6 +261,8 @@ getbranch() {
 
         this.detmodel = deptdata;
         this.model.oprtag="update";
+        this.detmodel.amount=0;
+        this.detmodel.reason='NONE';
        // this.model.hwid=deptdata.hwid;
         this.asnamehead = 'Return/Renew Book';
    
@@ -264,7 +283,9 @@ getbranch() {
     let clcd=localStorage.getItem('clcd');
     let aycd=localStorage.getItem('aycd');
     
-    var asgnmtdata = {clid: clid,  secid: secid,stuid:subid, retdt: retdt, oprtype: oprtype, clcd:clcd,aycd:aycd,id:this.detmodel.id,bookid:this.detmodel.bookid };
+    var asgnmtdata = {clid: clid,  secid: secid,stuid:subid, retdt: retdt, oprtype: oprtype, clcd:clcd,aycd:aycd,id:this.detmodel.id,bookid:this.detmodel.bookid,
+      reason:this.detmodel.reason,amount:this.detmodel.amount
+    };
     console.log('asgnmtdata-SAVE', asgnmtdata);
     this.SService.issuebook(asgnmtdata)
         .subscribe(resultArray => {
