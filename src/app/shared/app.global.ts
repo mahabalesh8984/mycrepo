@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class AppGlobals {
- readonly baseAPIUrl: string = 'http://192.168.0.201:8082/mycampz/v3/';
+ readonly baseAPIUrl: string = 'http://106.51.136.76:8082/mycampz/v3/';
     // readonly baseAPIUrl: string = 'http://localhost:8182/mycampuztest/api/v3/';
     //readonly baseAPIUrl: string = './v3/';
     readonly reporturl: string = './api/v3/fpdf181/pdfreports/';

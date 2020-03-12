@@ -107,6 +107,8 @@ export class BookissueComponent implements OnInit {
   }
   private _filter(value: string): bookdata[] {
     const filterValue = value.toLowerCase();
+    if (filterValue.length>=5)
+    {
     this.SService.serchbooks(filterValue)
           .subscribe(
           resultArray => {
@@ -117,6 +119,7 @@ export class BookissueComponent implements OnInit {
           },
           error => console.log("Error :: " + error)
           )
+        }
 return this.serboks;
     //return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
@@ -131,6 +134,23 @@ return this.serboks;
 
     this.route.navigate(['/app/books', bookid]);
     //this.route.navigateByUrl('/books/'+bookid);
+  }
+
+
+  cancelissue()
+  {
+    //this.selbookid=0;
+    this.selitem={bookid: '',
+    booktitle: '',
+    bookcategory: '',
+    author: ''};
+   // this.serboks=[];
+   this.filteredOptions = this.myControl.valueChanges
+   .pipe(
+     startWith(''),
+     map(value => this._filter(value))
+   );
+
   }
 
   Addbook()

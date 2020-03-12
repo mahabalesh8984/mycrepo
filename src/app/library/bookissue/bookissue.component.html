@@ -1,9 +1,9 @@
 <div class="content-wrapper">
     <section class="content-header">
        
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Classroom</a></li>
-            <li class="active">Attendance</li>
+        <ol class="breadcrumb pull-left" >
+            <li><a href="#"><i class="fa fa-dashboard"></i> Library</a></li>
+            <li class="active">Books Issue</li>
         </ol>
     </section>
     <section class="content">
@@ -12,15 +12,7 @@
                 <mat-card class="dbox">
                     <div class="col-sm-12">
                        
-<!-- 
-                            <div class="col-sm-2">
-                                <mat-form-field>
-                                    <input matInput [matDatepicker]="picker" placeholder="Attendance Date" name="attdt" [(ngModel)]="model.attdt" #dob="ngModel"
-                                        required>
-                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
-                                </mat-form-field>
-                            </div> -->
+
 
                             <div class="col-sm-2">
                                 <mat-form-field class="pad-l-0 full-width">
@@ -62,45 +54,10 @@
                                 </mat-form-field>
                             </div>
 
-                            <button class="btn btn-primary btn-round commandbtn" (click)="getissueddetails()"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
-                       
+                            <!-- <button class="btn btn-primary btn-round commandbtn" (click)="getissueddetails()"><i class="fa fa-search" aria-hidden="true"></i> Search</button> -->
+                            <button class="btn btn-primary " style="float:right !important" data-toggle="modal" data-dismiss="modal" data-target="#issuemodal" ><i class="fa " aria-hidden="true"></i>Issue Book</button>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                    <div class="col-sm-8 col-md-4 ">  
-                        <form class="example-form">
-                            <mat-form-field class="example-full-width">
-                                <mat-icon matSuffix>search</mat-icon>
-                              <input type="text"
-                              [(ngModel)]="selitem"
-                                     placeholder="Search by Book Id,Name"
-                                     aria-label="Number"
-                                     matInput
-                                     [formControl]="myControl"
-
-                                     [matAutocomplete]="auto">
-                              <mat-autocomplete #auto="matAutocomplete" [displayWith]="AutoCompleteDisplay" >
-                                <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="OnHumanSelected(selitem)">
-                                 
-
-                                  <div matLine>
-                                    <b>{{option.booktitle}} </b>
-                                    <span style="color:red;">{{option.author}} </span>
-                                </div>
-                                
-                                </mat-option>
-                              </mat-autocomplete>
-                            </mat-form-field>
-                          </form>
-                      
-                      
-                    </div>  
-                    <div class="col-sm-4 col-md-2 ">
-
-                        <button class="btn btn-primary "   (click)="Addbook()"><i class="fa fa-plus" aria-hidden="true"></i> Issue Book</button>
-                    </div>
-                </div>
-                </div> 
+                  
                 <div class="row"><div class="col-sm-12"><mat-card-content>
                         <mat-table #table [dataSource]="dataSource">
 
@@ -155,7 +112,60 @@
     </section>
 </div>
 
+<div id="issuemodal" class="modal fade" modal="delbcat" data-backdrop="false" role="dialog">
+    <form name="form"  #f="ngForm" novalidate>
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{title}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" #closeAddExpenseModal ng-click="dclb()">&times;</button>
+                </div>
+                <div class="modal-body">
 
+                   
+                    <div class="row">
+                        <div class="col-sm-12">
+                    <div class="col-sm-12 col-md-8 ">  
+                        <form class="example-form">
+                            <mat-form-field class="example-full-width">
+                                <mat-icon matSuffix>search</mat-icon>
+                              <input type="text"
+                              [(ngModel)]="selitem"
+                                     placeholder="Search by Book Id,Name"
+                                     aria-label="Number"
+                                     matInput
+                                     [formControl]="myControl"
+
+                                     [matAutocomplete]="auto">
+                              <mat-autocomplete #auto="matAutocomplete" [displayWith]="AutoCompleteDisplay" >
+                                <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="OnHumanSelected(selitem)">
+                                 
+
+                                  <div matLine>
+                                    <b>{{option.booktitle}} </b>
+                                    <span style="color:red;">{{option.author}} </span>
+                                </div>
+                                
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>
+                          </form>
+                      
+                      
+                    </div>  
+                    
+                </div>
+                </div> 
+
+                    <div class="modal-footer">
+                        <button class="btn btn-primary "   (click)="Addbook()">Issue</button>
+                        <button type="button" class="btn btn-secondary btn-round commandbtn"  (click)="cancelissue()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 <div id="myModal" class="modal fade" modal="delbcat" data-backdrop="false" role="dialog">
     <form name="form" (ngSubmit)="f.form.valid && SaveDetails(f)" #f="ngForm" novalidate>
         <div class="modal-dialog ">
@@ -240,3 +250,132 @@
         </div>
     </form>
 </div>
+<!-- <div id="myModal" class="modal fade in"  modal="delbcat" data-backdrop="false" role="dialog" [ngStyle]="{'display': mdlSampleIsOpen ? 'block' : 'none', 'opacity': 1}">
+    <form name="form" (ngSubmit)="f.form.valid && SaveDetails(f)" #f="ngForm" novalidate>
+    <div class="modal-dialog ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">{{title}}</h4>
+          <button type="button" class="close" data-dismiss="modal" #closeAddExpenseModal ng-click="dclb() " (click)="modalclose()">&times;</button>
+        </div>
+        <div class="modal-body"> 
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                       <mat-form-field class="full-width pad-r-0">
+                        <input matInput name="booktitle" [(ngModel)]="model.booktitle" #booktitle="ngModel" placeholder="Title"  required>
+                      </mat-form-field>
+                    </div>
+
+                    <div class="col-md-6">
+                        <mat-form-field class="full-width pad-r-0">
+
+                            <mat-select placeholder="Category"  name="bookcategory"
+                                        [(ngModel)]="model.bookcategory"  #bookcategory="ngModel">
+                                       <mat-option *ngFor="let acyr of acYears" [value]="acyr.value">
+                                         {{ acyr.viewValue }}
+                                       </mat-option>
+                                     </mat-select>
+                         
+                       </mat-form-field>
+                     </div>
+                    </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                       <mat-form-field class="full-width pad-r-0">
+                        <input matInput name="publication" [(ngModel)]="model.publication" #publication="ngModel" placeholder="Publication" maxlength="50" >
+                      </mat-form-field>
+                    </div>
+
+                    <div class="col-md-6">
+                  
+
+                       <mat-form-field>
+                        <input matInput [matDatepicker]="picker" name="pub_date" [(ngModel)]="detmodel.pub_date" #pub_date="ngModel" placeholder="Publication Date" >
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                     </div>
+                    </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                       <mat-form-field class="full-width pad-r-0">
+                        <input matInput name="author" [(ngModel)]="model.author" #author="ngModel" placeholder="Author" maxlength="50" required>
+                      </mat-form-field>
+                    </div>
+
+                    <div class="col-md-6">
+                        <mat-form-field class="full-width pad-r-0">
+                         <input matInput name="edition" [(ngModel)]="model.edition" #edition="ngModel" placeholder="Edition" maxlength="10" required>
+                       </mat-form-field>
+                     </div>
+                    </div>  
+
+               
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <mat-form-field class="full-width pad-r-0">
+                                 <input matInput name="invoiceno" [(ngModel)]="model.invoiceno" #invoiceno="ngModel" placeholder="Invoice No." maxlength="50" >
+                               </mat-form-field>
+                             </div>
+                            <div class="col-md-6">
+ 
+
+                              <mat-form-field>
+                                <input matInput [matDatepicker]="picker1" name="invoice_date" [(ngModel)]="detmodel.invoice_date" #invoice_date="ngModel" placeholder="Invoice Date" >
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+        
+                            
+                            </div> 
+                            
+                        <div class="row">
+                            
+                            <div class="col-md-6">
+                               <mat-form-field class="full-width pad-r-0">
+                                <input matInput name="mrp" [(ngModel)]="model.mrp" #mrp="ngModel" placeholder="MRP" maxlength="50" >
+                              </mat-form-field>
+                            </div>
+        
+                            
+                            </div> 
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-width pad-r-0">
+                                     <input matInput name="rackno" [(ngModel)]="model.rackno" #rackno="ngModel" placeholder="Rack No" maxlength="50" required>
+                                   </mat-form-field>
+                                 </div>
+                                <div class="col-md-6">
+
+                                <mat-form-field>
+                                    <mat-select placeholder="Status"  name="bookstatus"
+                                        [(ngModel)]="model.bookstatus"  #bookstatus="ngModel">
+                                       <mat-option *ngFor="let acyr of bookstatuses" [value]="acyr.value">
+                                         {{ acyr.viewValue }}
+                                       </mat-option>
+                                     </mat-select>
+                                </mat-form-field>
+                                
+                                </div>
+            
+                                
+                                </div> 
+               
+
+                  <input type="hidden" name="bookid" [(ngModel)]="model.bookid" #bookid="ngModel" >
+                  <input type="hidden" name="oprtag" [(ngModel)]="model.oprtype" #oprtag="ngModel" >
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-round commandbtn " ><i class="fa fa-check" aria-hidden="true"></i>Save</button>
+                <button type="button" class="btn btn-secondary btn-round commandbtn" data-dismiss="modal" ng-click="dclb()" (click)="modalclose()">Close</button>
+            </div>
+        </div>
+    </div>
+    </div>
+    </form>
+  </div> -->

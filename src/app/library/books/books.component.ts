@@ -55,7 +55,7 @@ export class BooksComponent implements OnInit {
 
   private mdlSampleIsOpen : boolean = false;
   acYears = [
-    {value: 'Academic', viewValue: 'Academic'},
+    {value: 'Circular', viewValue: 'Circular'},
     {value: 'Reference', viewValue: 'Reference'},
     {value: 'Journal', viewValue: 'Journal'},
     {value: 'Magazine', viewValue: 'Magazine'},
@@ -127,7 +127,29 @@ this.opendialog(this.model,'insert');
       }
   }
   
- 
+  applybooksFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+
+    if(filterValue.length>=5)
+    {
+    this.SService.serchbooks(filterValue)
+    .subscribe(
+    resultArray => {
+        console.log('books-result', resultArray);
+        this.bookdetails = resultArray;
+       
+        
+    },
+    error => console.log("Error :: " + error)
+    )
+  }
+  else{
+
+    this.getbookdetails();
+  }
+  }
+
   
   AutoCompleteDisplay(item: any): string {
     if (item == undefined) { return }
@@ -237,6 +259,9 @@ this.opendialog(this.model,'insert');
     var oprtype = this.model.oprtype;
     var bookstatus = this.model.bookstatus;
     var rackno = this.model.rackno;
+    var bookcode = this.model.bookcode;
+    var publishplace = this.model.publishplace;
+    var nopages = this.model.nopages;
 
     
    // var dbnm = this.tempdbnm;
@@ -245,7 +270,8 @@ this.opendialog(this.model,'insert');
     let aycd=localStorage.getItem('aycd');
     
     var asgnmtdata = {bookid: bookid,  booktitle: booktitle,bookcategory:bookcategory, author: author, oprtype: oprtype, clcd:clcd,aycd:aycd,publication:publication
-      ,pub_date:pub_date,edition:edition,price:price,mrp:mrp ,invoiceno:invoiceno,invoice_date:invoice_date,bookstatus:bookstatus,rackno:rackno};
+      ,pub_date:pub_date,edition:edition,price:price,mrp:mrp ,invoiceno:invoiceno,invoice_date:invoice_date,bookstatus:bookstatus,rackno:rackno,
+      bookcode:bookcode,publishplace:publishplace,nopages:nopages};
     console.log('bookdata-SAVE', asgnmtdata);
     this.libservice.savebookdetails(asgnmtdata)
         .subscribe(resultArray => {

@@ -18,20 +18,12 @@
             <div class="col-md-12">
                 <mat-card class="dbox">
                         <mat-card-content>
-                    <!-- <div class="dbox-header">
-                      
-                        <div class="row"><div class="col-md-6">Class</div> <div class="col-md-6" > 
-                         
-                       
-                             
-                        
-                        </div></div>
-                     
-                    </div> -->
+                    
                     <div class="col-sm-12"> 
                         <form name="form" >
                                 <div class="col-md-5" >
                                         <select2 [data]="exampleData"  [width]="300"   [cssImport]=true (valueChanged)="changed($event)"></select2>
+                                        
 
                                 </div>
                                 <div class="col-md-5">
@@ -48,14 +40,14 @@
                         </div>
                    
                        
-                            <mat-table #table [dataSource]="dataSource" >
+                             <mat-table #table [dataSource]="dataSource" >
                           
 
                               <ng-container matColumnDef="action" >
                                   <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'" >  </mat-header-cell>
                                   <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass'"> 
                                     <a> <i class="fa fa-edit commandicons" title="Edit" style="font-weight: bold" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')" ></i></a>
-                                <!-- <button mat-icon-button color="accent" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')" > <i class="material-icons">edit</i></button> -->
+                                
                                
                                 
                                       
@@ -112,7 +104,7 @@
                                         <mat-cell *matCellDef="let row" [ngClass]="'commandright'"> 
                                           <a> <i class="fa fa-upload commandicons" data-toggle="modal" data-dismiss="modal" title="Upload Documents" data-target="#docmodal" (click)="docdialog(row.stuId)" ></i></a>
                                          &nbsp;&nbsp;&nbsp; <a> <i class="fa fa-print commandicons" title="Pdf"  ></i></a>
-                                      <!-- <button mat-icon-button color="accent" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(row,'update')" > <i class="material-icons">edit</i></button> -->
+                                      
                                      
                                       
                                             
@@ -121,7 +113,7 @@
                           
                               <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                               <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-                            </mat-table> 
+                            </mat-table>  
 
 
                          
