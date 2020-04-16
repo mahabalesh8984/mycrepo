@@ -55,7 +55,7 @@
                               </ng-container>
                               <ng-container matColumnDef="photo">
                                     <mat-header-cell *matHeaderCellDef   >  </mat-header-cell>
-                                    <mat-cell *matCellDef="let element">  <img src="http://106.51.136.76:8081/mycampz/v3/Images/SG/photoblank.png" class="user-photo" alt="User Image"> </mat-cell>
+                                    <mat-cell *matCellDef="let element">  <img src="http://106.51.136.76:8082/mycampz/v3/Images/SG/photoblank.png" class="user-photo" alt="User Image"> </mat-cell>
                                   </ng-container>
                         
                               <ng-container matColumnDef="name">
@@ -398,8 +398,8 @@
                                                                                 <div class="col-md-4 col-md-offset-1">
                                                                                     <mat-form-field class="pad-l-0 full-width" >
                                                                                         <mat-select placeholder="Admitted Year" name="adayid" [(ngModel)]="student.adayid" #adayid="ngModel" required>
-                                                                                            <mat-option *ngFor="let acyr of acYears" [value]="acyr.value">
-                                                                                                {{ acyr.viewValue }}
+                                                                                            <mat-option *ngFor="let acyr of acYears" [value]="acyr.ayid">
+                                                                                                {{ acyr.ayname }}
                                                                                             </mat-option>
                                                                                         </mat-select>
                                                                                     </mat-form-field>
@@ -536,6 +536,8 @@
                                                                         <form   name="pform" #parentform="ngForm">
                                                                             <div class="row">
                                                                                 <div class="col-md-4 ">
+
+                                                                                    
                                                                                     <mat-form-field class="pad-l-0 full-width">
                                                                                         <input matInput placeholder="Fathername" name="fatname" [(ngModel)]="student.fatname" #fatname="ngModel"
                                                                                             required>
@@ -557,9 +559,9 @@
                                                                                         <input matInput placeholder="Father Mobileno" name="fatmobile" [(ngModel)]="student.fatmobile" #fatmobile="ngModel" pattern="[0-9]{10}"
                                                                                             required>
 
-                                                                                            <mat-error *ngIf=" !fatmobile.valid">
+                                                                                            <!-- <mat-error *ngIf=" !fatmobile.valid">
                                                                                                 Please enter a valid phonenumber
-                                                                                              </mat-error>
+                                                                                              </mat-error> -->
                                                                                     </mat-form-field>
                                                                                 </div>
                                                                                 <div class="col-md-4 col-md-offset-1">
@@ -567,9 +569,9 @@
                                                                                         <input matInput placeholder="Father Emailid" name="fatemail" [(ngModel)]="student.fatemail" #fatemail="ngModel" pattern= "^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
                                                                                             >
 
-                                                                                            <mat-error *ngIf="!fatemail.valid">
+                                                                                            <!-- <mat-error *ngIf="!fatemail.valid">
                                                                                                 Please enter  valid email address
-                                                                                              </mat-error>
+                                                                                              </mat-error> -->
                                                                                               
                                                                                     </mat-form-field>
                                                                                 </div>
@@ -600,9 +602,9 @@
                                                                                         <input matInput placeholder="Mother Mobileno" name="motmobile1" [(ngModel)]="student.motmobile" #motmobile="ngModel" pattern="[0-9]{10}"
                                                                                             >
 
-                                                                                            <mat-error *ngIf=" !motmobile.valid">
+                                                                                            <!-- <mat-error *ngIf=" !motmobile.valid">
                                                                                                 Please enter a valid phonenumber
-                                                                                              </mat-error>
+                                                                                              </mat-error> -->
                                                                                     </mat-form-field>
                                                                                 </div>
                                                                                 <div class="col-md-4 col-md-offset-1">
@@ -610,9 +612,9 @@
                                                                                         <input matInput placeholder="Mother Emailid" name="motemail" [(ngModel)]="student.motemail" #mottemail="ngModel" pattern= "^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
                                                                                         >
 
-                                                                                        <mat-error *ngIf="!mottemai.valid">
+                                                                                        <!-- <mat-error *ngIf="!mottemai.valid">
                                                                                             Please enter  valid email address
-                                                                                          </mat-error>
+                                                                                          </mat-error> -->
                                                                                     </mat-form-field>
                                                                                 </div>
                                                                             </div>
@@ -620,7 +622,7 @@
                                                                         </form>
                 
                                                                     </div>
-                                                                    <div class="box-footer" style="background: #edeff0;">
+                                                                    <div class="box-footer" >
                                                                         <button class="btn btn-info btn-sm pull-right" tabindex="20" (click)="tab=4" [disabled]="!parentform.form.valid">
                                                                             Next
                                                                             <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>

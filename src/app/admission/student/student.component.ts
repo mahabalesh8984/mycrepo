@@ -76,9 +76,7 @@ stuid:number=0;
     alertmessage:string;
     tab=1;
     acYears = [
-        {value: '1', viewValue: '2017-2018'},
-        {value: '2', viewValue: '2018-2019'},
-        {value: '3', viewValue: '2019-2000'}
+        
       ];
 
 
@@ -182,6 +180,7 @@ this.GetSectionList();
 this.Getpayoptions();
 this.Getfeequota();
 this.Getubcomb();
+this.Getaylist();
   }
 
   // ngAfterViewInit() {
@@ -221,7 +220,20 @@ this.Getubcomb();
     );
 
   }
-
+  Getaylist() {
+    this.masservice.getacademicyear()
+        .subscribe(
+        resultArray => {
+            console.log('section-result', resultArray);
+            this.acYears = resultArray;
+            // if(resultArray.length>0)
+            // {
+            //  this.user.fyear=resultArray[0].id;
+            // }
+        },
+        error => console.log("Error :: " + error)
+        )
+}
   public onpaging(evn) {
     debugger
     

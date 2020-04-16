@@ -96,7 +96,7 @@ export class BookissueComponent implements OnInit {
   displayedColumns = ['booktitle', 'issue', 'due', 'cnt','status','commands'];
   //displayedColumns = [ 'attstatus'];
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild('closeAddExpenseModal', {static: true}) closeAddExpenseModal: ElementRef;
+
 
   ngAfterViewInit() {
     this.getbranch();
@@ -105,6 +105,8 @@ export class BookissueComponent implements OnInit {
       this.by_sp_student();
       //this.SaveAttdDetails();
   }
+  @ViewChild('closeAddExpenseModal', {static: true}) closeAddExpenseModal: ElementRef;
+  @ViewChild('closeissueModal', {static: true}) closeissueModal: ElementRef;
   private _filter(value: string): bookdata[] {
     const filterValue = value.toLowerCase();
     if (filterValue.length>=5)
@@ -175,8 +177,8 @@ return this.serboks;
         alert (result.message);
         this.getissueddetails();
         //this.alertmessage=result.message;
-    
-   // this.Getclasslist();
+    this.closeissueModal.nativeElement.click();
+   // this.Getclasslist();  
     }, error => 
     alert('error in connection')
     //this.alertmessage='error in connection'
@@ -289,7 +291,35 @@ getbranch() {
     //this.oprtype = cmd;
 }
 
+deletefnc(id)
+{
+  var clid = this.model.clid;
+  var subid = this.model.stuid;
+  var secid = this.model.secid;
+  var retdt = '';
+  var oprtype = 'delete';
+  let clcd=localStorage.getItem('clcd');
+  let aycd=localStorage.getItem('aycd');
+  
+  var asgnmtdata = {clid: clid,  secid: secid,stuid:subid, retdt: retdt, oprtype: oprtype, clcd:clcd,aycd:aycd,id:id,bookid:0,
+    reason:'',amount:0
+  };
+  console.log('asgnmtdata-SAVE', asgnmtdata);
+  this.SService.issuebook(asgnmtdata)
+      .subscribe(resultArray => {
+          // console.log('ret-by', resultArray);
+          // this.dataSource = new MatTableDataSource(resultArray);
 
+          alert('Details Deleted');
+         this.getissueddetails()
+          //this.SaveAsgnmtDetails();
+          this.closeAddExpenseModal.nativeElement.click();
+
+      }, error =>
+          alert('error in connection')
+      );
+
+}
   SaveDetails(f: NgForm) {
     debugger
     var clid = this.model.clid;
@@ -315,6 +345,7 @@ getbranch() {
             alert(resultArray.message);
            this.getissueddetails()
             //this.SaveAsgnmtDetails();
+            this.closeAddExpenseModal.nativeElement.click();
 
         }, error =>
             alert('error in connection')

@@ -50,6 +50,7 @@ export class BooksComponent implements OnInit {
 
   selbooktitle:string='';
   selbookid:bigint;
+  nocopys:any;
 
   display='none';
 
@@ -105,7 +106,7 @@ export class BooksComponent implements OnInit {
       this.detmodel.recdt = dates
       console.log(this.datePipe.transform(attdt, "yyyy-MM-dd")); //output : 2018-02-13
 
-     
+     this.nocopys=1;
 
   }
   displayedColumns = ['booktitle', 'issue', 'due', 'cnt','status','commands'];
@@ -150,7 +151,11 @@ this.opendialog(this.model,'insert');
   }
   }
 
-  
+  Genarateqrpdf()
+  {
+
+
+  }
   AutoCompleteDisplay(item: any): string {
     if (item == undefined) { return }
     return  item.booktitle;

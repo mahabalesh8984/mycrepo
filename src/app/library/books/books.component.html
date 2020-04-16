@@ -74,6 +74,7 @@
                                             <tr>
                                                 <td>
                                                     <a> <i class="fa fa-edit commandicons" style="font-weight: bold" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(book,'update')"  ></i></a>
+                                                   &nbsp;&nbsp; <a> <i class="fa fa-qrcode commandicons" style="font-weight: bold;color: blue;" data-toggle="modal" data-dismiss="modal" data-target="#genqrModal"   ></i></a>
                                                 </td>
                                                 <td>{{book.booktitle}}</td>
                                                 <td>{{book.publication}}</td>
@@ -240,6 +241,40 @@
                       <input type="hidden" name="oprtag" [(ngModel)]="model.oprtype" #oprtag="ngModel" >
                 <div class="modal-footer">
                     <button class="btn btn-primary btn-round commandbtn " ><i class="fa fa-check" aria-hidden="true"></i>Save</button>
+                    <button type="button" class="btn btn-secondary btn-round commandbtn" data-dismiss="modal" ng-click="dclb()" (click)="modalclose()">Close</button>
+                </div>
+            </div>
+        </div>
+        </div>
+        </form>
+      </div>
+
+
+      <div id="genqrModal" class="modal fade in"  modal="delbcat" data-backdrop="false" role="dialog" >
+        <form name="form" (ngSubmit)="f.form.valid && Genarateqrpdf()" #f="ngForm" novalidate>
+        <div class="modal-dialog modal-sm ">
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="modal-title">Genarate QR Code</span>
+              <button type="button" class="close" data-dismiss="modal" #copiesModal ng-click="dclb() " >&times;</button>
+            </div>
+            <div class="modal-body"> 
+
+                <div class="row">
+                
+                    <div class="col-md-6">
+                       <mat-form-field class="full-width pad-r-0">
+                        <input matInput name="nocopys" [(ngModel)]="model.nocopys" #nocopys="ngModel" placeholder="Number of copies"  required>
+                      </mat-form-field>
+                    </div>
+
+                   
+                    </div>
+    
+    
+                     
+                <div class="modal-footer">
+                    <button class="btn btn-primary btn-round commandbtn " ><i class="fa fa-check" aria-hidden="true"></i>Generate</button>
                     <button type="button" class="btn btn-secondary btn-round commandbtn" data-dismiss="modal" ng-click="dclb()" (click)="modalclose()">Close</button>
                 </div>
             </div>

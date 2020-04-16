@@ -26,3 +26,8 @@
 .modal-backdrop {
     z-index: 1060 !important;
 }
+.mat-option
+{
+
+    line-height: 10px !important;
+}
