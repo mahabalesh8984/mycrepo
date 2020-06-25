@@ -112,13 +112,11 @@
     -webkit-transition: all 0.95s;
     transition: all 0.95s;
 }
-.modal-dialog {
-    margin-top: 60px;
-}
-.modal
+
+/* .modal
 {
     z-index:0;
-}
+} */
 ::ng-deep.cdk-overlay-container {
     
     z-index: 1060 ;

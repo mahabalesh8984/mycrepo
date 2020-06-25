@@ -184,7 +184,7 @@ label {
         z-index: unset;
     }
 
-
+/* 
     .select2-container--default .select2-selection--single {
         background-color: #fff;
         border-bottom: 1px solid #aaa;
@@ -194,4 +194,5 @@ label {
     .select2-dropdown {
         background-color: #fff;
         border-bottom: 1px solid #aaa;
-        border-radius: 0px;}
+        border-radius: 0px;} */
+        .cdk-overlay-container{ z-index: 1200 !important; }

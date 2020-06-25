@@ -18,14 +18,27 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit() {
+    this.Getaylist();
   }
 
  acYears = [
-    {value: '1', viewValue: '2017-2018'},
-    {value: '13', viewValue: '2018-2019'},
-    {value: '3', viewValue: '2019-2000'}
+    
   ];
 
+  Getaylist() {
+    this.Auth.getayyear()
+        .subscribe(
+        resultArray => {
+            console.log('section-result', resultArray);
+            this.acYears = resultArray;
+            if(resultArray.length>0)
+            {
+             this.user.fyear=resultArray[0].id;
+            }
+        },
+        error => console.log("Error :: " + error)
+        )
+}
 
   login() {
     this.loading = true;

@@ -8,7 +8,10 @@ import { DatePipe } from '@angular/common';
 import { NgForm } from '@angular/forms';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+
+import { Router,ActivatedRoute } from '@angular/router';
+
+
 
 
 
@@ -47,8 +50,13 @@ export class BooksComponent implements OnInit {
 
   selbooktitle:string='';
   selbookid:bigint;
+  nocopys:any;
+
+  display='none';
+
+  private mdlSampleIsOpen : boolean = false;
   acYears = [
-    {value: 'Academic', viewValue: 'Academic'},
+    {value: 'Circular', viewValue: 'Circular'},
     {value: 'Reference', viewValue: 'Reference'},
     {value: 'Journal', viewValue: 'Journal'},
     {value: 'Magazine', viewValue: 'Magazine'},
@@ -61,8 +69,34 @@ export class BooksComponent implements OnInit {
     
   
   ];
-  constructor(private http: HttpClient, private datePipe: DatePipe, private _global: AppGlobals, private SService: MasterService,private libservice: LibraryService) { }
+  bookid:any;
+  constructor(private http: HttpClient, private datePipe: DatePipe, private _global: AppGlobals, private SService: MasterService,private libservice: LibraryService,private route: ActivatedRoute,) { }
   ngOnInit() {
+
+
+    this.route.params.subscribe(params => {
+      console.log("params",params);
+    var bookid=params['bookid'];
+    if(bookid)
+    {
+      this.bookid=params['bookid'];
+    }
+    else
+    {
+      this.bookid=0;
+    }
+      // if(this.encRequest.toUpperCase()=="INITIATED")
+      // {
+
+      //   this.payresponse="Your Transaction was not Suucessful." 
+      // }
+      
+      // else
+      // {
+      // this.payresponse=params['retmsg'];
+      // }
+     
+    });
 
       this.model.clid = '1';
       this.model.secid = '1';
@@ -72,7 +106,7 @@ export class BooksComponent implements OnInit {
       this.detmodel.recdt = dates
       console.log(this.datePipe.transform(attdt, "yyyy-MM-dd")); //output : 2018-02-13
 
-     
+     this.nocopys=1;
 
   }
   displayedColumns = ['booktitle', 'issue', 'due', 'cnt','status','commands'];
@@ -87,9 +121,41 @@ export class BooksComponent implements OnInit {
     //   this.by_sp_student();
       //this.SaveAttdDetails();
       this.getbookdetails();
+      if(this.bookid!=0)
+      {
+this.opendialog(this.model,'insert');
+       
+      }
   }
   
+  applybooksFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
 
+    if(filterValue.length>=5)
+    {
+    this.SService.serchbooks(filterValue)
+    .subscribe(
+    resultArray => {
+        console.log('books-result', resultArray);
+        this.bookdetails = resultArray;
+       
+        
+    },
+    error => console.log("Error :: " + error)
+    )
+  }
+  else{
+
+    this.getbookdetails();
+  }
+  }
+
+  Genarateqrpdf()
+  {
+
+
+  }
   AutoCompleteDisplay(item: any): string {
     if (item == undefined) { return }
     return  item.booktitle;
@@ -157,6 +223,13 @@ export class BooksComponent implements OnInit {
       this.asnamehead='Modify Book Details';
   }
   this.model.oprtype=cmd;
+  this.mdlSampleIsOpen = true;
+  }
+
+  modalclose()
+  {
+
+    this.mdlSampleIsOpen = false;
   }
 
   SaveDetails(f: NgForm) {
@@ -191,6 +264,9 @@ export class BooksComponent implements OnInit {
     var oprtype = this.model.oprtype;
     var bookstatus = this.model.bookstatus;
     var rackno = this.model.rackno;
+    var bookcode = this.model.bookcode;
+    var publishplace = this.model.publishplace;
+    var nopages = this.model.nopages;
 
     
    // var dbnm = this.tempdbnm;
@@ -199,7 +275,8 @@ export class BooksComponent implements OnInit {
     let aycd=localStorage.getItem('aycd');
     
     var asgnmtdata = {bookid: bookid,  booktitle: booktitle,bookcategory:bookcategory, author: author, oprtype: oprtype, clcd:clcd,aycd:aycd,publication:publication
-      ,pub_date:pub_date,edition:edition,price:price,mrp:mrp ,invoiceno:invoiceno,invoice_date:invoice_date,bookstatus:bookstatus,rackno:rackno};
+      ,pub_date:pub_date,edition:edition,price:price,mrp:mrp ,invoiceno:invoiceno,invoice_date:invoice_date,bookstatus:bookstatus,rackno:rackno,
+      bookcode:bookcode,publishplace:publishplace,nopages:nopages};
     console.log('bookdata-SAVE', asgnmtdata);
     this.libservice.savebookdetails(asgnmtdata)
         .subscribe(resultArray => {

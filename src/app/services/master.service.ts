@@ -13,6 +13,16 @@ export class MasterService {
     callurl: string = "";
     constructor(private http: HttpClient, private _global: AppGlobals) { }
 
+
+    getacademicyear() {
+        let clcd=localStorage.getItem('clcd');
+        let aycd=localStorage.getItem('aycd');
+        return this.http.get(this._global.baseAPIUrl + 'masacyear/'+clcd+'/'+aycd)
+            .map((data: any) => {
+                return data.aylist;
+            })
+      }
+
     //massclass started
     branch() {
 

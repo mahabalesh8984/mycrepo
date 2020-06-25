@@ -60,7 +60,7 @@ export class StudentaddComponent implements OnInit {
     subcomb:any=[];
     fequota:any=[];
     masmot:any=[];
-    displayedColumns = ['action','photo', 'name','rollno','dob','admno','stsno','motname',,'fatname','fatmobile','fatemail','action2'];
+    displayedColumns = ['action','photo', 'name','rollno','dob','admno','stsno','motname','fatname','fatmobile','fatemail','action2'];
 stuid:number=0;
     
     
@@ -76,9 +76,7 @@ stuid:number=0;
     alertmessage:string;
     tab=1;
     acYears = [
-        {value: '1', viewValue: '2017-2018'},
-        {value: '2', viewValue: '2018-2019'},
-        {value: '3', viewValue: '2019-2000'}
+        
       ];
 
 
@@ -176,21 +174,23 @@ stuid:number=0;
   //   }
   // ];
   this.tempdbnm="myc0091819";
+  this.getclassec();
     this.classlist();
 this.GetSectionList();
 this.Getpayoptions();
 this.Getfeequota();
 this.Getubcomb();
+this.Getaylist();
   }
 
-  ngAfterViewInit() {
-    debugger
-    this.getclassec();
+  // ngAfterViewInit() {
+  //   debugger
+  //   this.getclassec();
 
     
-     // this.dataSource.paginator = this.paginator;
+  //    // this.dataSource.paginator = this.paginator;
   
-  }
+  // }
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
@@ -220,7 +220,20 @@ this.Getubcomb();
     );
 
   }
-
+  Getaylist() {
+    this.masservice.getacademicyear()
+        .subscribe(
+        resultArray => {
+            console.log('section-result', resultArray);
+            this.acYears = resultArray;
+            // if(resultArray.length>0)
+            // {
+            //  this.user.fyear=resultArray[0].id;
+            // }
+        },
+        error => console.log("Error :: " + error)
+        )
+}
   public onpaging(evn) {
     debugger
     

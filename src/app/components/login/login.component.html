@@ -30,8 +30,8 @@
                       <mat-form-field class="pad-l-0 full-width">
                         <mat-select placeholder="Academic Year"  name="fyear"
                            [(ngModel)]="user.fyear"  #fyear="ngModel">
-                          <mat-option *ngFor="let acyr of acYears" [value]="acyr.value">
-                            {{ acyr.viewValue }}
+                          <mat-option *ngFor="let acyr of acYears" [value]="acyr.id">
+                            {{ acyr.ayname }}
                           </mat-option>
                         </mat-select>
                       </mat-form-field>

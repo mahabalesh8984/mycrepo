@@ -2,8 +2,8 @@
     <section class="content-header">
        
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Classroom</a></li>
-            <li class="active">Attendance</li>
+            <li><a href="#"><i class="fa fa-dashboard"></i> Library</a></li>
+            <li class="active">Books</li>
         </ol>
     </section>
     <section class="content">
@@ -11,6 +11,16 @@
             <div class="col-md-12">
                 <mat-card class="dbox">
                     <div class="col-sm-12">
+                        <form name="form"  #f="ngForm" novalidate>
+                        <div class="col-md-7">
+                            <mat-form-field>
+                                    <mat-icon matSuffix>search</mat-icon>
+                                <input matInput (keyup)="applybooksFilter($event.target.value)" style="width:300px !important" placeholder="Serch by Title,Code">
+                              </mat-form-field>
+                        <!-- <mat-form-field >
+                            <input matInput (keyup)="applyFilter($event.target.value)" style="width:200px" placeholder="Serch by Name,RollNo">
+                          </mat-form-field> -->
+                    </div>
                        
 <!-- 
                             <div class="col-sm-2">
@@ -34,25 +44,17 @@
 
                       
 
-                            <button class="btn btn-primary " style="float:right !important" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(model,'insert')"><i class="fa fa-plus" aria-hidden="true"></i>New Record</button>
-                       
+                            <!-- <button class="btn btn-primary " style="float:right !important" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(model,'insert')"><i class="fa fa-plus" aria-hidden="true"></i>New Record</button> -->
+                            <div class="col-md-5">    <button class="btn btn-primary " style="float:right !important" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(model,'insert')"><i class="fa fa-plus" aria-hidden="true"></i>New Book</button>
+                            </div>
+                        </form>
                     </div>
                 
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title">Responsive Hover Table</h3>
-            
-                                    <div class="box-tools">
-                                        <div class="input-group input-group-sm" style="width: 150px;">
-                                            <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-            
-                                            <div class="input-group-btn">
-                                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                                 <!-- /.box-header -->
                                 <div class="box-body table-responsive no-padding">
@@ -72,6 +74,7 @@
                                             <tr>
                                                 <td>
                                                     <a> <i class="fa fa-edit commandicons" style="font-weight: bold" data-toggle="modal" data-dismiss="modal" data-target="#myModal" (click)="opendialog(book,'update')"  ></i></a>
+                                                   &nbsp;&nbsp; <a> <i class="fa fa-qrcode commandicons" style="font-weight: bold;color: blue;" data-toggle="modal" data-dismiss="modal" data-target="#genqrModal"   ></i></a>
                                                 </td>
                                                 <td>{{book.booktitle}}</td>
                                                 <td>{{book.publication}}</td>
@@ -95,24 +98,21 @@
            
         </div>
     </section>
-</div>
 
-
-<div id="myModal" class="modal fade"  modal="delbcat" data-backdrop="false" role="dialog">
-    <form name="form" (ngSubmit)="f.form.valid && SaveDetails(f)" #f="ngForm" novalidate>
-    <div class="modal-dialog ">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">{{title}}</h4>
-          <button type="button" class="close" data-dismiss="modal" #closeAddExpenseModal ng-click="dclb()">&times;</button>
-        </div>
-        <div class="modal-body"> 
-
+    <div id="myModal" class="modal fade in"  modal="delbcat" data-backdrop="false" role="dialog" [ngStyle]="{'display': mdlSampleIsOpen ? 'block' : 'none', 'opacity': 1}">
+        <form name="form" (ngSubmit)="f.form.valid && SaveDetails(f)" #f="ngForm" novalidate>
+        <div class="modal-dialog ">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">{{title}}</h4>
+              <button type="button" class="close" data-dismiss="modal" #closeAddExpenseModal ng-click="dclb() " (click)="modalclose()">&times;</button>
+            </div>
+            <div class="modal-body"> 
 
                 <div class="row">
                     <div class="col-md-6">
                        <mat-form-field class="full-width pad-r-0">
-                        <input matInput name="booktitle" [(ngModel)]="model.booktitle" #booktitle="ngModel" placeholder="Title"  required>
+                        <input matInput name="bookcode" [(ngModel)]="model.bookcode" #bookcode="ngModel" placeholder="Book Code"  required>
                       </mat-form-field>
                     </div>
 
@@ -129,105 +129,160 @@
                        </mat-form-field>
                      </div>
                     </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                       <mat-form-field class="full-width pad-r-0">
-                        <input matInput name="publication" [(ngModel)]="model.publication" #publication="ngModel" placeholder="Publication" maxlength="50" >
-                      </mat-form-field>
-                    </div>
-
-                    <div class="col-md-6">
-                  
-
-                       <mat-form-field>
-                        <input matInput [matDatepicker]="picker" name="pub_date" [(ngModel)]="detmodel.pub_date" #pub_date="ngModel" placeholder="Publication Date" >
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                      </mat-form-field>
-                     </div>
-                    </div>
-
-                  <div class="row">
-                    <div class="col-md-6">
-                       <mat-form-field class="full-width pad-r-0">
-                        <input matInput name="author" [(ngModel)]="model.author" #author="ngModel" placeholder="Author" maxlength="50" required>
-                      </mat-form-field>
-                    </div>
-
-                    <div class="col-md-6">
-                        <mat-form-field class="full-width pad-r-0">
-                         <input matInput name="edition" [(ngModel)]="model.edition" #edition="ngModel" placeholder="Edition" maxlength="10" required>
-                       </mat-form-field>
-                     </div>
-                    </div>  
-
-               
-
+    
+    
+                    <div class="row">
+                        <div class="col-md-6">
+                           <mat-form-field class="full-width pad-r-0">
+                            <input matInput name="booktitle" [(ngModel)]="model.booktitle" #booktitle="ngModel" placeholder="Title"  required>
+                          </mat-form-field>
+                        </div>
+    
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width pad-r-0">
+                             <input matInput name="nopages" [(ngModel)]="model.nopages" #nopages="ngModel" placeholder="No of Pages" maxlength="10" required>
+                           </mat-form-field>
+                         </div>
+                        </div>
                         <div class="row">
+                            <div class="col-md-6">
+                               <mat-form-field class="full-width pad-r-0">
+                                <input matInput name="author" [(ngModel)]="model.author" #author="ngModel" placeholder="Author" maxlength="50" required>
+                              </mat-form-field>
+                            </div>
                             <div class="col-md-6">
                                 <mat-form-field class="full-width pad-r-0">
                                  <input matInput name="invoiceno" [(ngModel)]="model.invoiceno" #invoiceno="ngModel" placeholder="Invoice No." maxlength="50" >
                                </mat-form-field>
                              </div>
-                            <div class="col-md-6">
+                           
+                            </div>  
+    
+                    <div class="row">
+                        <div class="col-md-6">
+                           <mat-form-field class="full-width pad-r-0">
+                            <input matInput name="publication" [(ngModel)]="model.publication" #publication="ngModel" placeholder="Publication" maxlength="50" >
+                          </mat-form-field>
+                        </div>
+    
+                        <div class="col-md-6">
  
 
-                              <mat-form-field>
-                                <input matInput [matDatepicker]="picker1" name="invoice_date" [(ngModel)]="detmodel.invoice_date" #invoice_date="ngModel" placeholder="Invoice Date" >
-                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                <mat-datepicker #picker1></mat-datepicker>
-                              </mat-form-field>
-                            </div>
-        
-                            
-                            </div> 
-                            
+                            <mat-form-field>
+                              <input matInput [matDatepicker]="picker1" name="invoice_date" [(ngModel)]="model.invoice_date" #invoice_date="ngModel" placeholder="Invoice Date" >
+                              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                              <mat-datepicker #picker1></mat-datepicker>
+                            </mat-form-field>
+                          </div>
+      
+                        </div>
+    
+                     
                         <div class="row">
                             <div class="col-md-6">
                                 <mat-form-field class="full-width pad-r-0">
-                                 <input matInput name="price" [(ngModel)]="model.price" #price="ngModel" placeholder="Price" maxlength="50" >
+                                 <input matInput name="edition" [(ngModel)]="model.edition" #edition="ngModel" placeholder="Edition" maxlength="10" required>
                                </mat-form-field>
                              </div>
-                            <div class="col-md-6">
-                               <mat-form-field class="full-width pad-r-0">
-                                <input matInput name="mrp" [(ngModel)]="model.mrp" #mrp="ngModel" placeholder="MRP" maxlength="50" >
-                              </mat-form-field>
-                            </div>
-        
+                             <div class="col-md-6">
+                                <mat-form-field class="full-width pad-r-0">
+                                 <input matInput name="price" [(ngModel)]="model.price" #price="ngModel" placeholder="Purchase Price" maxlength="10" >
+                               </mat-form-field>
+                             </div>
                             
-                            </div> 
+                         </div> 
+
+
+                                
                             <div class="row">
+
                                 <div class="col-md-6">
                                     <mat-form-field class="full-width pad-r-0">
-                                     <input matInput name="rackno" [(ngModel)]="model.rackno" #rackno="ngModel" placeholder="Rack No" maxlength="50" required>
+                                     <input matInput name="pub_date" [(ngModel)]="model.pub_date" #pub_date="ngModel" placeholder="Published Year" maxlength="4" required>
                                    </mat-form-field>
                                  </div>
-                                <div class="col-md-6">
-
-                                <mat-form-field>
-                                    <mat-select placeholder="Status"  name="bookstatus"
-                                        [(ngModel)]="model.bookstatus"  #bookstatus="ngModel">
-                                       <mat-option *ngFor="let acyr of bookstatuses" [value]="acyr.value">
-                                         {{ acyr.viewValue }}
-                                       </mat-option>
-                                     </mat-select>
-                                </mat-form-field>
                                 
+                                <div class="col-md-6">
+                                   <mat-form-field class="full-width pad-r-0">
+                                    <input matInput name="mrp" [(ngModel)]="model.mrp" #mrp="ngModel" placeholder="MRP" maxlength="50" >
+                                  </mat-form-field>
                                 </div>
             
                                 
                                 </div> 
-               
-
-                  <input type="hidden" name="bookid" [(ngModel)]="model.bookid" #bookid="ngModel" >
-                  <input type="hidden" name="oprtag" [(ngModel)]="model.oprtype" #oprtag="ngModel" >
-            <div class="modal-footer">
-                <button class="btn btn-primary btn-round commandbtn " ><i class="fa fa-check" aria-hidden="true"></i>Save</button>
-                <button type="button" class="btn btn-secondary btn-round commandbtn" data-dismiss="modal" ng-click="dclb()" (click)="c('Close click')">Close</button>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <mat-form-field class="full-width pad-r-0">
+                                         <input matInput name="publishplace" [(ngModel)]="model.publishplace" #publishplace="ngModel" placeholder="Published Place" maxlength="20" >
+                                       </mat-form-field>
+                                     </div>
+                                    <div class="col-md-6">
+                                        <mat-form-field  >
+                                         <input matInput name="rackno" [(ngModel)]="model.rackno" #rackno="ngModel" placeholder="Rack No" maxlength="10" required>
+                                       </mat-form-field>
+                                
+    
+                                    <mat-form-field>
+                                        <mat-select placeholder="Status"  name="bookstatus"
+                                            [(ngModel)]="model.bookstatus"  #bookstatus="ngModel">
+                                           <mat-option *ngFor="let acyr of bookstatuses" [value]="acyr.value">
+                                             {{ acyr.viewValue }}
+                                           </mat-option>
+                                         </mat-select>
+                                    </mat-form-field>
+                                    
+                                    </div>
+                
+                                    
+                                    </div> 
+                   
+    
+                      <input type="hidden" name="bookid" [(ngModel)]="model.bookid" #bookid="ngModel" >
+                      <input type="hidden" name="oprtag" [(ngModel)]="model.oprtype" #oprtag="ngModel" >
+                <div class="modal-footer">
+                    <button class="btn btn-primary btn-round commandbtn " ><i class="fa fa-check" aria-hidden="true"></i>Save</button>
+                    <button type="button" class="btn btn-secondary btn-round commandbtn" data-dismiss="modal" ng-click="dclb()" (click)="modalclose()">Close</button>
+                </div>
             </div>
         </div>
-    </div>
-    </div>
-    </form>
-  </div>
+        </div>
+        </form>
+      </div>
+
+
+      <div id="genqrModal" class="modal fade in"  modal="delbcat" data-backdrop="false" role="dialog" >
+        <form name="form" (ngSubmit)="f.form.valid && Genarateqrpdf()" #f="ngForm" novalidate>
+        <div class="modal-dialog modal-sm ">
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="modal-title">Genarate QR Code</span>
+              <button type="button" class="close" data-dismiss="modal" #copiesModal ng-click="dclb() " >&times;</button>
+            </div>
+            <div class="modal-body"> 
+
+                <div class="row">
+                
+                    <div class="col-md-6">
+                       <mat-form-field class="full-width pad-r-0">
+                        <input matInput name="nocopys" [(ngModel)]="model.nocopys" #nocopys="ngModel" placeholder="Number of copies"  required>
+                      </mat-form-field>
+                    </div>
+
+                   
+                    </div>
+    
+    
+                     
+                <div class="modal-footer">
+                    <button class="btn btn-primary btn-round commandbtn " ><i class="fa fa-check" aria-hidden="true"></i>Generate</button>
+                    <button type="button" class="btn btn-secondary btn-round commandbtn" data-dismiss="modal" ng-click="dclb()" (click)="modalclose()">Close</button>
+                </div>
+            </div>
+        </div>
+        </div>
+        </form>
+      </div>
+</div>
+
+
+

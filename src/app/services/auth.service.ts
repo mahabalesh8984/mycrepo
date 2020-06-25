@@ -46,7 +46,13 @@ logout() {
     localStorage.removeItem('currentUser');
 }
 
-
+getayyear() {
+  
+  return this.http.get(this._global.baseAPIUrl + 'Aylist')
+      .map((data: any) => {
+          return data.aylist;
+      })
+}
 
 public getToken(): string {
     return localStorage.getItem('token');
